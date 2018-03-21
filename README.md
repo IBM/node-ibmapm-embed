@@ -1,6 +1,6 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3f8e27ab77d341e8a87ec3f9a4cb7f0c)](https://www.codacy.com/app/shiyanf/node-ibmapm-embed?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=IBM-APM/node-ibmapm-embed&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/439d3e6d7897457fbedaea71c14f7a6a)](https://www.codacy.com/app/shiyanf/node-ibmapm-embed?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=IBM-APM/node-ibmapm-embed&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.org/IBM-APM/node-ibmapm-embed.svg?branch=master)](https://travis-ci.org/IBM-APM/node-ibmapm-embed)
-[![codebeat badge](https://codebeat.co/badges/f7a857b8-a6c0-49e9-994d-1c1cc10a37f9)](https://codebeat.co/projects/github-com-ibm-apm-node-ibmapm-embed-master)
+[![codebeat badge](https://codebeat.co/badges/c53e9598-a0c6-40e3-8d25-40a4eeaadf07)](https://codebeat.co/projects/github-com-ibm-apm-node-ibmapm-embed-master)
 [![codecov](https://codecov.io/gh/IBM-APM/node-ibmapm-embed/branch/master/graph/badge.svg)](https://codecov.io/gh/IBM-APM/node-ibmapm-embed)
 
 # Node.js Data Collector for IBM Application Performance Management (APM)
