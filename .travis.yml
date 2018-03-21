@@ -6,5 +6,7 @@ node_js:
   - "node"
 os:
   - linux
-script: npm run-script travis
+script:
+  - npm install appmetrics
+  - npm run-script travis
 
