@@ -59,6 +59,7 @@ process.env.VCAP_SERVICES = JSON.stringify({
         ]
     }]
 });
+require('appmetrics');
 var dc = require('../index');
 
 var bamplugin = require('../lib/ibm_apm_restclient/lib/plugins/BAMPlugin');

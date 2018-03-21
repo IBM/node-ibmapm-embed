@@ -19,7 +19,7 @@ process.env.IBM_APM_INGRESS_URL =
 process.env.IBM_APM_SERVER_URL =
     'aHR0cDovL2ZvcnRhcHRlc3Rvbmx5Lmlnbm9yZQ==';
 process.env.MONITORING_SERVER_TYPE = 'BAM';
-
+require('appmetrics');
 var dc = require('../index');
 
 var bamplugin = require('../lib/ibm_apm_restclient/lib/plugins/BAMPlugin');
