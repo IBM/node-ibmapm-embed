@@ -1,0 +1,10 @@
+dist: trusty
+language: node_js
+node_js:
+  - "6"
+  - "4"
+  - "node"
+os:
+  - linux
+script: npm run-script travis
+

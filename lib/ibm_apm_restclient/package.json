@@ -1,0 +1,43 @@
+{
+    "name": "ibm_apm_restclient",
+    "version": "1.0.0",
+    "description": "The development toolkit to allowed third party datacollector to send data to APM/BAM.",
+    "engines": {
+        "node": "^6.0.0"
+    },
+    "dependencies": {
+        "chai": "^3.5.0",
+        "mocha": "^2.5.3",
+        "log4js": "1.1.0",
+        "should": "^9.0.0",
+        "should-http": "0.0.4",
+        "https-proxy-agent": "1.0.0",
+        "agent-base": "2",
+        "debug": "2",
+        "extend": "3",
+        "request": "^2.72.0",
+        "unexpected": "^10.13.3"
+    },
+    "devDependencies": {
+        "chai": "^3.5.0",
+        "mocha": "^2.5.3",
+        "should": "^9.0.0",
+        "should-http": "0.0.4",
+        "unexpected": "^10.13.3"
+    },
+    "scripts": {
+        "pretest": "eslint .",
+        "test": "mocha ./test/testRestClient.js -t 2000 -R xunit",
+        "start": "node ./test/ut.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/shiyanf/ibm_apm_restclient.git"
+    },
+    "author": "shiyanf@cn.ibm.com",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/shiyanf/ibm_apm_restclient/issues"
+    },
+    "homepage": "https://github.com/shiyanf/ibm_apm_restclient#readme"
+}
