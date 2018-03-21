@@ -1,7 +1,7 @@
 {
     "name": "ibmapm-embed",
     "main": "./index.js",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "readme": "Node.js Data Collector",
     "description": "Node.js data collector for IBM BAM",
     "dependencies": {
@@ -39,7 +39,7 @@
     "license": "Apache-2.0",
     "bugs": {
         "email": "yuecchen@cn.ibm.com",
-        "url": "https://github.com/IBM-APM/node-ibmapm/issues"
+        "url": "https://github.com/IBM-APM/node-ibmapm-embed/issues"
     },
     "author": {
         "name": "Yue Chen",
@@ -47,7 +47,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git@github.com:IBM-APM/node-ibmapm.git"
+        "url": "git@github.com:IBM-APM/node-ibmapm-embed.git"
     },
     "contributors": [{
             "name": "Hui Jun Song",
