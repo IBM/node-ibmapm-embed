@@ -3,6 +3,12 @@
 // Node module: ibmapm
 // This file is licensed under the Apache License 2.0.
 // License text available at https://opensource.org/licenses/Apache-2.0
+if (process.env.NODEJS_DC_DISABLE && process.env.NODEJS_DC_DISABLE.toLowerCase() === 'true') {
+    return;
+}
+if (process.env.ITCAM_DC_ENABLED && process.env.ITCAM_DC_ENABLED.toLowerCase() === 'false') {
+    return;
+}
 
 const util = require('util');
 var log4js = require('log4js');
@@ -82,16 +88,7 @@ if (process.env.MONITORING_SERVER_TYPE === 'BAM') {
 
 // initialize BAM configuration end
 
-if (process.env.NODEJS_DC_DISABLE && process.env.NODEJS_DC_DISABLE.toLowerCase() === 'true') {
-    logger.info('The Node.js DC is disabled. ' +
-        ' Please refer to the document to configure the Node.js DC again.');
-    return;
-}
-if (process.env.ITCAM_DC_ENABLED && process.env.ITCAM_DC_ENABLED.toLowerCase() === 'false') {
-    logger.info('The Node.js DC is disabled. ' +
-        ' Please refer to the document to configure the Node.js DC again.');
-    return;
-}
+
 commontools.enableTrace(appmetrics);
 
 // Start DC in case rest client is ready to send payload
