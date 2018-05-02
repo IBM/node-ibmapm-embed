@@ -1,8 +1,0 @@
-# APM Server url http://apmserver.com or https://apmserver.com:443
-APM_BM_GATEWAY_URL=https://tivvm384.cn.ibm.com:443
-APM_KEYFILE=keyfile.p12
-APM_KEYFILE_PSWD=Y2NtUjBjS3Mh
-# By default, APM_SNI=default.server.
-# For SaaS please assign it as the hostname of GATEWAY_URL. 
-# For onPremise, please assign it as your keyfile's Owner/CN=, if there is *, please replace it in your own case.
-#APM_SNI=@{APM_SERVER_SNI}

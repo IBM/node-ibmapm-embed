@@ -13,7 +13,7 @@ if (process.env.ITCAM_DC_ENABLED && process.env.ITCAM_DC_ENABLED.toLowerCase() =
 const util = require('util');
 var log4js = require('log4js');
 var commontools = require('./lib/tool/common');
-
+var path = require('path');
 if (!global.NodeDCLoaded) {
     // The Node.js DC is not required.
     global.NodeDCLoaded = true;
@@ -44,6 +44,7 @@ if (loglevel &&
 //    initialize log end
 // Sometimes we need to change the name of some environment variables to consistant all of DC.
 commontools.envDecrator();
+global.DC_VERSION = getDCVersion();
 
 process.env.MONITORING_SERVER_TYPE = 'BAM';
 
@@ -126,4 +127,12 @@ exports.attach = function(options) {
     }
     appmetrics = options.appmetrics;
     return exports;
+};
+
+function getDCVersion() {
+    var packageJson = require(path.join(__dirname, 'package.json'));
+    if (packageJson && packageJson.version) {
+        return packageJson.version;
+    }
+    return '1.0.0';
 };

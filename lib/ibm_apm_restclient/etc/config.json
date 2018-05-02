@@ -33,13 +33,22 @@
             "name": "JSO",
             "frequency": 10,
             "batchsize": 0
+        },
+        {
+            "name": "META",
+            "frequency": 10,
+            "batchsize": 0
+        },
+        {
+            "name": "AMUI",
+            "frequency": 10,
+            "batchsize": 0
         }
     ],
-    "consumers": [
-        {
+    "consumers": [{
             "name": "BAM",
             "plugin_file": "/lib/plugins/BAMPlugin.js",
-            "listento": "DC,AAR,METRICS,RESOURCE,ADR",
+            "listento": "DC,AAR,METRICS,RESOURCE,ADR,META,AMUI",
             "connections": []
         },
         {

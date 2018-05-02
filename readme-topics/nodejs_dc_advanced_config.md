@@ -1,10 +1,9 @@
 # Advanced configurations
-This section introduces all supported variables for the Node.js data collector. You can set the variables to change the behavior of your data collector according to the description below.    
+You can set the variables described in this section to change the default behavior of your data collector.    
 
-## Variables for changing data collector behavior
 
-* For **Bluemix** applications, you can set the following variables in the `manifest.yml` file or on the **Bluemix UI**.  
-* For **local** applications, you can set the following variables in the `config.properties` file.  
+* For IBM Cloud applications, set the following variables in the `manifest.yml` file or on the **Bluemix UI**.  
+* For on-premises applications, set the following variables in the `config.properties` file.  
 
 |Variable                | Importance                         | Default Value | Description                                               |
 |:---------------------------------|:--------------------------------------|:--------------|:-------------------------------------------------------|
@@ -18,4 +17,4 @@ This section introduces all supported variables for the Node.js data collector. 
 |KNJ_MIN_CLOCK_STACK       |optional                       |100              |If the response time of a request instance exceeds the value of this variable (in milliseconds), the data collector collects its stack trace.
 
 
-**Parent topic:** [Node.js Data Collector for IBM Application Performance Management (APM)](../README.md)
+**Parent topic:** [Node.js Data Collector](../README.md)
