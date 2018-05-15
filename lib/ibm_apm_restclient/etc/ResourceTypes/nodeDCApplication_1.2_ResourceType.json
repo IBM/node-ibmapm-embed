@@ -1,5 +1,82 @@
 {
   "extraData": {
+    "components": {
+      "requestsSummary": {
+        "displaylabel": "requestsSummary",
+        "name": "requestsSummary",
+        "description": "requestsSummary",
+        "metrics": {
+          "averageResponseTime": {
+            "dataType": "int",
+            "displaylabel": "Average Response Time",
+            "name": "Average Response Time",
+            "description": "The average response time of the certain request in the last minute",
+            "units": "milliseconds",
+            "tags": {
+              "groupName": "requestsSummary"
+            }
+          },
+          "hitCountInMinute": {
+            "dataType": "int",
+            "displaylabel": "Hit Count in Minute",
+            "name": "Hit Count in Minute",
+            "description": "The hit counts of the certain request in the last minute",
+            "units": "requests",
+            "tags": {
+              "groupName": "requestsSummary"
+            }
+          }
+        },
+        "dimensions": {
+          "requestName": {
+            "dataType": "string",
+            "displaylabel": "Request Name",
+            "name": "Request Name",
+            "description": "The request's Name.",
+            "required": "y"
+          },
+          "resourceID": {
+            "dataType": "string",
+            "displaylabel": "Resource ID",
+            "name": "Resource ID",
+            "description": "The resource ID.",
+            "required": "y"
+          },
+          "npmResourceID": {
+            "dataType": "string",
+            "displaylabel": "NPM Resource ID",
+            "name": "NPM Resource ID",
+            "description": "The npm resource ID."
+          },
+          "requestMethod": {
+            "dataType": "string",
+            "displaylabel": "Request Method",
+            "name": "Request Method",
+            "description": "The request's Method.",
+            "required": "y"
+          },
+          "applicationInstanceResourceID": {
+            "dataType": "string",
+            "displaylabel": "Application Instance Resource ID",
+            "name": "Application Instance Resource ID",
+            "description": "The a pplication instance resource ID."
+          },
+          "_componentType": {
+            "dataType": "string",
+            "displaylabel": "Component Type",
+            "name": "Component Type",
+            "description": "The component type.",
+            "required": "y"
+          },
+          "runtimeResourceID": {
+            "dataType": "string",
+            "displaylabel": "Runtime Resource ID",
+            "name": "Runtime Resource ID",
+            "description": "The runtime resource ID."
+          }
+        }
+      }
+    },
     "metrics": {
       "averageResponseTime": {
         "displaylabel": "Average Response Time",
@@ -557,5 +634,7 @@
   "entityTypes": ["application"],
   "metadataVersion": "1.2",
   "uniqueId": "metadata//1.2/resourcetypes/resourcetype/application",
-  "tags": ["metadata"]
+  "tags": ["metadata",
+  "topLevelResource"],
+  "timestamp": "2018-05-11T14:29:35.254+08:00"
 }

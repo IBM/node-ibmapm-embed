@@ -1,76 +1,186 @@
 {
   "extraData": {
+    "components": {
+      "eventLoop": {
+        "displaylabel": "eventLoop",
+        "name": "eventLoop",
+        "description": "eventLoop",
+        "metrics": {
+          "averageEventLoopLatency": {
+            "dataType": "double",
+            "displaylabel": "Average Latency",
+            "name": "Average Latency",
+            "description": "The average sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute.",
+            "units": "milliseconds",
+            "tags": {
+              "groupName": "eventLoop"
+            }
+          },
+          "minimumEventLoopLatency": {
+            "dataType": "double",
+            "displaylabel": "Shortest Latency",
+            "name": "Shortest Latency",
+            "description": "The shortest sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute.",
+            "units": "milliseconds",
+            "tags": {
+              "groupName": "eventLoop"
+            }
+          },
+          "maximumEventLoopLatency": {
+            "dataType": "double",
+            "displaylabel": "Longest Latency",
+            "name": "Longest Latency",
+            "description": "The longest sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute",
+            "units": "milliseconds",
+            "tags": {
+              "groupName": "eventLoop"
+            }
+          }
+        },
+        "dimensions": {
+          "resourceID": {
+            "dataType": "string",
+            "displaylabel": "Resource ID",
+            "name": "Resource ID",
+            "description": "The resource ID.",
+            "required": "y",
+            "enumValues": {
+              "Available": "Not"
+            }
+          },
+          "npmResourceID": {
+            "dataType": "string",
+            "displaylabel": "NPM Resource ID",
+            "name": "NPM Resource ID",
+            "description": "The npm resource ID."
+          },
+          "applicationInstanceResourceID": {
+            "dataType": "string",
+            "displaylabel": "Application Instance Resource ID",
+            "name": "Application Instance Resource ID",
+            "description": "The a pplication instance resource ID."
+          },
+          "_componentType": {
+            "dataType": "string",
+            "displaylabel": "Component Type",
+            "name": "Component Type",
+            "description": "The component type.",
+            "required": "y"
+          },
+          "applicationResourceID": {
+            "dataType": "string",
+            "displaylabel": "Application Resource ID",
+            "name": "Application Resource ID",
+            "description": "The Application resource ID."
+          }
+        }
+      },
+      "loop": {
+        "displaylabel": "loop",
+        "name": "loop",
+        "description": "loop",
+        "metrics": {
+          "loopCpuUser": {
+            "dataType": "double",
+            "displaylabel": "Loop CPU User",
+            "name": "Loop CPU User",
+            "description": "The percentage of 1 CPU used by the event loop thread in user code last interval",
+            "units": "cpu",
+            "tags": {
+              "groupName": "loop"
+            }
+          },
+          "averageEventLoopTickTime": {
+            "dataType": "double",
+            "displaylabel": "Average Event Loop Tick Time",
+            "name": "Average Event Loop Tick Time",
+            "description": "The average tick time of the event loop in milliseconds over the last one minute",
+            "units": "milliseconds",
+            "tags": {
+              "groupName": "loop"
+            }
+          },
+          "maximumEventLoopTickTime": {
+            "dataType": "double",
+            "displaylabel": "Event Loop slowest Tick Time",
+            "name": "Event Loop slowest Tick Time",
+            "description": "The longest or slowest tick time (milliseconds) of the event loop in last one minute",
+            "units": "milliseconds",
+            "tags": {
+              "groupName": "loop"
+            }
+          },
+          "minimumEventLoopTickTime": {
+            "dataType": "double",
+            "displaylabel": "Event Loop fastest Tick Time",
+            "name": "Event Loop fastest Tick Time",
+            "description": "he shortest or fastest tick time of the event loop in milliseconds over the last interval",
+            "units": "milliseconds",
+            "tags": {
+              "groupName": "loop"
+            }
+          },
+          "loopCpuSystem": {
+            "dataType": "double",
+            "displaylabel": "Loop CPU System",
+            "name": "Loop CPU System",
+            "description": "The percentage of 1 CPU used by the event loop thread in system code in the last interval",
+            "units": "cpu",
+            "tags": {
+              "groupName": "loop"
+            }
+          },
+          "eventLoopTickCount": {
+            "dataType": "int",
+            "displaylabel": "Event Loop Tick Count",
+            "name": "Event Loop Tick Count",
+            "description": "The total number of event loop ticks in last minute",
+            "units": "ticks",
+            "tags": {
+              "groupName": "loop"
+            }
+          }
+        },
+        "dimensions": {
+          "resourceID": {
+            "dataType": "string",
+            "displaylabel": "Resource ID",
+            "name": "Resource ID",
+            "description": "The resource ID.",
+            "required": "y",
+            "enumValues": {
+              "Available": "Not"
+            }
+          },
+          "npmResourceID": {
+            "dataType": "string",
+            "displaylabel": "NPM Resource ID",
+            "name": "NPM Resource ID",
+            "description": "The npm resource ID."
+          },
+          "applicationInstanceResourceID": {
+            "dataType": "string",
+            "displaylabel": "Application Instance Resource ID",
+            "name": "Application Instance Resource ID",
+            "description": "The a pplication instance resource ID."
+          },
+          "_componentType": {
+            "dataType": "string",
+            "displaylabel": "Component Type",
+            "name": "Component Type",
+            "description": "The component type.",
+            "required": "y"
+          },
+          "applicationResourceID": {
+            "dataType": "string",
+            "displaylabel": "Application Resource ID",
+            "name": "Application Resource ID",
+            "description": "The Application resource ID."
+          }
+        }
+      }
+    },
     "metrics": {
-      "averageEventLoopLatency": {
-        "displaylabel": "Average Latency",
-        "dataType": "double",
-        "name": "Average Latency",
-        "description": "The average sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute.",
-        "units": "milliseconds",
-        "tags": {
-          "groupName": "nodeDCRuntime"
-        }
-      },
-      "processWeakCallbacksGcCount": {
-        "displaylabel": "Process Weak Callbacks Count",
-        "dataType": "int",
-        "name": "Process Weak Callbacks Count",
-        "description": "The count of process weak callbacks GC, in one minute",
-        "units": "count",
-        "tags": {
-          "groupName": "nodeDCRuntime"
-        }
-      },
-      "maximumEventLoopLatency": {
-        "displaylabel": "Longest Latency",
-        "dataType": "double",
-        "name": "Longest Latency",
-        "description": "The longest sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute",
-        "units": "milliseconds",
-        "tags": {
-          "groupName": "nodeDCRuntime"
-        }
-      },
-      "heapSize": {
-        "displaylabel": "Heap Size",
-        "dataType": "int",
-        "name": "Heap Size",
-        "description": "The heap size of the Node application in the last interval, in megabytes",
-        "units": "megabytes",
-        "tags": {
-          "groupName": "nodeDCRuntime"
-        }
-      },
-      "maximumEventLoopTickTime": {
-        "displaylabel": "Event Loop slowest Tick Time",
-        "dataType": "double",
-        "name": "Event Loop slowest Tick Time",
-        "description": "The longest or slowest tick time (milliseconds) of the event loop in last one minute",
-        "units": "milliseconds",
-        "tags": {
-          "groupName": "nodeDCRuntime"
-        }
-      },
-      "markSweepGcCount": {
-        "displaylabel": "Mark Sweep Count",
-        "dataType": "int",
-        "name": "Mark Sweep Count",
-        "description": "The count of Mark Sweep Compact GC, in one minute",
-        "units": "count",
-        "tags": {
-          "groupName": "nodeDCRuntime"
-        }
-      },
-      "eventLoopTickCount": {
-        "displaylabel": "Event Loop Tick Count",
-        "dataType": "int",
-        "name": "Event Loop Tick Count",
-        "description": "The total number of event loop ticks in last minute",
-        "units": "ticks",
-        "tags": {
-          "groupName": "nodeDCRuntime"
-        }
-      },
       "incrementalMarkingGcCount": {
         "displaylabel": "Incremental Marking Count",
         "dataType": "int",
@@ -91,16 +201,6 @@
           "groupName": "nodeDCRuntime"
         }
       },
-      "minimumEventLoopLatency": {
-        "displaylabel": "Shortest Latency",
-        "dataType": "double",
-        "name": "Shortest Latency",
-        "description": "The shortest sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute.",
-        "units": "milliseconds",
-        "tags": {
-          "groupName": "nodeDCRuntime"
-        }
-      },
       "scavengeGcCount": {
         "displaylabel": "Scavenge GC Count",
         "dataType": "int",
@@ -111,12 +211,22 @@
           "groupName": "nodeDCRuntime"
         }
       },
-      "averageEventLoopTickTime": {
-        "displaylabel": "Average Event Loop Tick Time",
-        "dataType": "double",
-        "name": "Average Event Loop Tick Time",
-        "description": "The average tick time of the event loop in milliseconds over the last one minute",
-        "units": "milliseconds",
+      "processWeakCallbacksGcCount": {
+        "displaylabel": "Process Weak Callbacks Count",
+        "dataType": "int",
+        "name": "Process Weak Callbacks Count",
+        "description": "The count of process weak callbacks GC, in one minute",
+        "units": "count",
+        "tags": {
+          "groupName": "nodeDCRuntime"
+        }
+      },
+      "heapSize": {
+        "displaylabel": "Heap Size",
+        "dataType": "int",
+        "name": "Heap Size",
+        "description": "The heap size of the Node application in the last interval, in megabytes",
+        "units": "megabytes",
         "tags": {
           "groupName": "nodeDCRuntime"
         }
@@ -127,6 +237,16 @@
         "name": "usedHeap",
         "description": "The amount of memory that is used in the Node application, in megabytes",
         "units": "megabytes",
+        "tags": {
+          "groupName": "nodeDCRuntime"
+        }
+      },
+      "markSweepGcCount": {
+        "displaylabel": "Mark Sweep Count",
+        "dataType": "int",
+        "name": "Mark Sweep Count",
+        "description": "The count of Mark Sweep Compact GC, in one minute",
+        "units": "count",
         "tags": {
           "groupName": "nodeDCRuntime"
         }
@@ -170,12 +290,14 @@
       }
     }
   },
-  "displaylabel": "Node DC Runtime",
+  "displaylabel": "Node Application Runtime",
   "origin": "KDN",
-  "name": "Node DC Runtime",
-  "description": "Node DC Runtime.",
+  "name": "Node Application Runtime",
+  "description": "Node Application Runtime",
   "entityTypes": ["nodeApplicationRuntime"],
   "metadataVersion": "1.2",
   "uniqueId": "metadata//1.2/resourcetypes/resourcetype/nodeApplicationRuntime",
-  "tags": ["metadata"]
+  "tags": ["metadata",
+  "topLevelResource"],
+  "timestamp": "2018-05-11T14:46:30.382+08:00"
 }

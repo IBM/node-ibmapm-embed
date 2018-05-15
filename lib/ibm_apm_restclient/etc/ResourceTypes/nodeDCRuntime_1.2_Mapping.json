@@ -2,7 +2,223 @@
   "doctype": "mapping",
   "productCode": "KDN",
   "extraData": {
-    "entity-properties": [],
+    "entity-properties": [{
+      "displaylabel": "loop",
+      "members": [{
+        "metricIntervals": "1",
+        "use": "loop",
+        "keys": "",
+        "when": "$odiObject *eq loop",
+        "propertyIntervals": "1",
+        "tableName": "loop"
+      }],
+      "description": "loop",
+      "overrides": [{
+        "set": ["$odiAttribute *eq resourceID",
+        "$odiLabel *eq Resource ID",
+        "$odiDescription *eq The resource ID.",
+        "$displayName *eq true",
+        "$fieldRequired *eq true",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string",
+        "$enumIVal *eq Available",
+        "$enumEVal *eq Not"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq resourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq applicationResourceID",
+        "$odiLabel *eq Application Resource ID",
+        "$odiDescription *eq The Application resource ID.",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq applicationResourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq npmResourceID",
+        "$odiLabel *eq NPM Resource ID",
+        "$odiDescription *eq The npm resource ID.",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq npmResourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq applicationInstanceResourceID",
+        "$odiLabel *eq Application Instance Resource ID",
+        "$odiDescription *eq The a pplication instance resource ID.",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq applicationInstanceResourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq _componentType",
+        "$odiLabel *eq Component Type",
+        "$odiDescription *eq The component type.",
+        "$fieldRequired *eq true",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq _componentType"
+      },
+      {
+        "set": ["$odiAttribute *eq averageEventLoopTickTime",
+        "$odiLabel *eq Average Event Loop Tick Time",
+        "$odiDescription *eq The average tick time of the event loop in milliseconds over the last one minute",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq double",
+        "$useUnits *eq milliseconds"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq Loop_Average"
+      },
+      {
+        "set": ["$odiAttribute *eq eventLoopTickCount",
+        "$odiLabel *eq Event Loop Tick Count",
+        "$odiDescription *eq The total number of event loop ticks in last minute",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq int",
+        "$useUnits *eq ticks"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq Loop_Count"
+      },
+      {
+        "set": ["$odiAttribute *eq maximumEventLoopTickTime",
+        "$odiLabel *eq Event Loop slowest Tick Time",
+        "$odiDescription *eq The longest or slowest tick time (milliseconds) of the event loop in last one minute",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq double",
+        "$useUnits *eq milliseconds"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq Loop_Maximum"
+      },
+      {
+        "set": ["$odiAttribute *eq minimumEventLoopTickTime",
+        "$odiLabel *eq Event Loop fastest Tick Time",
+        "$odiDescription *eq he shortest or fastest tick time of the event loop in milliseconds over the last interval",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq double",
+        "$useUnits *eq milliseconds",
+        "$odiEnums *eq true"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq minimumEventLoopTickTime"
+      },
+      {
+        "set": ["$odiAttribute *eq loopCpuUser",
+        "$odiLabel *eq Loop CPU User",
+        "$odiDescription *eq The percentage of 1 CPU used by the event loop thread in user code  last interval",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq double",
+        "$useUnits *eq cpu"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq loopCpuUser"
+      },
+      {
+        "set": ["$odiAttribute *eq loopCpuSystem",
+        "$odiLabel *eq Loop CPU System",
+        "$odiDescription *eq The percentage of 1 CPU used by the event loop thread in system code in the last interval",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq double",
+        "$useUnits *eq cpu",
+        "$odiEnums *eq true"],
+        "when": "$odiObject *eq loop *and $odiAttribute *eq loopCpuSystem"
+      }],
+      "type": "loop",
+      "uniqueId": "metadata\/\/1.2\/resourcemaps\/resourcemap\/nodeDCRuntime\/loop",
+      "properties": [{
+        "datatype": "string",
+        "values": ["Resource"],
+        "displaylabel": "Class",
+        "name": "Class",
+        "description": ""
+      }]
+    },
+    {
+      "displaylabel": "eventLoop",
+      "members": [{
+        "metricIntervals": "1",
+        "use": "eventLoop",
+        "keys": "",
+        "when": "$odiObject *eq eventLoop",
+        "propertyIntervals": "1",
+        "tableName": "eventLoop"
+      }],
+      "description": "eventLoop",
+      "overrides": [{
+        "set": ["$odiAttribute *eq resourceID",
+        "$odiLabel *eq Resource ID",
+        "$odiDescription *eq The resource ID.",
+        "$displayName *eq true",
+        "$fieldRequired *eq true",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string",
+        "$enumIVal *eq Available",
+        "$enumEVal *eq Not"],
+        "when": "$odiObject *eq eventLoop *and $odiAttribute *eq resourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq applicationResourceID",
+        "$odiLabel *eq Application Resource ID",
+        "$odiDescription *eq The Application resource ID.",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq eventLoop *and $odiAttribute *eq applicationResourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq npmResourceID",
+        "$odiLabel *eq NPM Resource ID",
+        "$odiDescription *eq The npm resource ID.",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq eventLoop *and $odiAttribute *eq npmResourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq applicationInstanceResourceID",
+        "$odiLabel *eq Application Instance Resource ID",
+        "$odiDescription *eq The a pplication instance resource ID.",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq eventLoop *and $odiAttribute *eq applicationInstanceResourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq _componentType",
+        "$odiLabel *eq Component Type",
+        "$odiDescription *eq The component type.",
+        "$fieldRequired *eq true",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq eventLoop *and $odiAttribute *eq _componentType"
+      },
+      {
+        "set": ["$odiAttribute *eq averageEventLoopLatency",
+        "$odiLabel *eq Average Latency",
+        "$odiDescription *eq The average sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute.",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq double",
+        "$useUnits *eq milliseconds",
+        "$odiEnums *eq true"],
+        "when": "$odiObject *eq eventLoop *and $odiAttribute *eq averageEventLoopLatency"
+      },
+      {
+        "set": ["$odiAttribute *eq maximumEventLoopLatency",
+        "$odiLabel *eq Longest Latency",
+        "$odiDescription *eq The longest sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq double",
+        "$useUnits *eq milliseconds"],
+        "when": "$odiObject *eq eventLoop *and $odiAttribute *eq Latency_Max"
+      },
+      {
+        "set": ["$odiAttribute *eq minimumEventLoopLatency",
+        "$odiLabel *eq Shortest Latency",
+        "$odiDescription *eq The shortest sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute.",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq double",
+        "$useUnits *eq milliseconds",
+        "$odiEnums *eq true"],
+        "when": "$odiObject *eq eventLoop *and $odiAttribute *eq minimumEventLoopLatency"
+      }],
+      "type": "eventLoop",
+      "uniqueId": "metadata\/\/1.2\/resourcemaps\/resourcemap\/nodeDCRuntime\/eventLoop",
+      "properties": [{
+        "datatype": "string",
+        "values": ["Resource"],
+        "displaylabel": "Class",
+        "name": "Class",
+        "description": ""
+      }]
+    }],
     "resource-properties": {
       "relationships": [],
       "members": [{
@@ -120,82 +336,6 @@
         "$odiDataType *eq int",
         "$useUnits *eq megabytes"],
         "when": "$odiObject *eq nodeDCRuntime *and $odiAttribute *eq usedHeap"
-      },
-      {
-        "set": ["$odiAttribute *eq averageEventLoopLatency",
-        "$odiLabel *eq Average Latency",
-        "$odiDescription *eq The average sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute.",
-        "$fieldOutput *eq metric",
-        "$odiDataType *eq double",
-        "$useUnits *eq milliseconds",
-        "$odiEnums *eq true"],
-        "when": "$odiObject *eq nodeDCRuntime *and $odiAttribute *eq averageEventLoopLatency"
-      },
-      {
-        "set": ["$odiAttribute *eq maximumEventLoopLatency",
-        "$odiLabel *eq Longest Latency",
-        "$odiDescription *eq The longest sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute",
-        "$fieldOutput *eq metric",
-        "$odiDataType *eq double",
-        "$useUnits *eq milliseconds"],
-        "when": "$odiObject *eq nodeDCRuntime *and $odiAttribute *eq Latency_Max"
-      },
-      {
-        "set": ["$odiAttribute *eq minimumEventLoopLatency",
-        "$odiLabel *eq Shortest Latency",
-        "$odiDescription *eq The shortest sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute.",
-        "$fieldOutput *eq metric",
-        "$odiDataType *eq double",
-        "$useUnits *eq milliseconds",
-        "$odiEnums *eq true"],
-        "when": "$odiObject *eq nodeDCRuntime *and $odiAttribute *eq minimumEventLoopLatency"
-      },
-      {
-        "set": ["$odiAttribute *eq averageEventLoopTickTime",
-        "$odiLabel *eq Average Event Loop Tick Time",
-        "$odiDescription *eq The average tick time of the event loop in milliseconds over the last one minute",
-        "$fieldOutput *eq metric",
-        "$odiDataType *eq double",
-        "$useUnits *eq milliseconds"],
-        "when": "$odiObject *eq nodeDCRuntime *and $odiAttribute *eq Loop_Average"
-      },
-      {
-        "set": ["$odiAttribute *eq eventLoopTickCount",
-        "$odiLabel *eq Event Loop Tick Count",
-        "$odiDescription *eq The total number of event loop ticks in last minute",
-        "$fieldOutput *eq metric",
-        "$odiDataType *eq int",
-        "$useUnits *eq ticks"],
-        "when": "$odiObject *eq nodeDCRuntime *and $odiAttribute *eq Loop_Count"
-      },
-      {
-        "set": ["$odiAttribute *eq maximumEventLoopTickTime",
-        "$odiLabel *eq Event Loop slowest Tick Time",
-        "$odiDescription *eq The longest or slowest tick time (milliseconds) of the event loop in last one minute",
-        "$fieldOutput *eq metric",
-        "$odiDataType *eq double",
-        "$useUnits *eq milliseconds"],
-        "when": "$odiObject *eq nodeDCRuntime *and $odiAttribute *eq Loop_Maximum"
-      },
-      {
-        "set": ["$odiAttribute *eq averageEventLoopLatency",
-        "$odiLabel *eq Average Latency",
-        "$odiDescription *eq The average sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute.",
-        "$fieldOutput *eq metric",
-        "$odiDataType *eq double",
-        "$useUnits *eq milliseconds",
-        "$odiEnums *eq true"],
-        "when": "$odiObject *eq nodeDCRuntime *and $odiAttribute *eq averageEventLoopLatency"
-      },
-      {
-        "set": ["$odiAttribute *eq minimumEventLoopLatency",
-        "$odiLabel *eq Shortest Latency",
-        "$odiDescription *eq The shortest sampled latency, in milliseconds. The latency samples are taken in the last five seconds in one minute.",
-        "$fieldOutput *eq metric",
-        "$odiDataType *eq double",
-        "$useUnits *eq milliseconds",
-        "$odiEnums *eq true"],
-        "when": "$odiObject *eq nodeDCRuntime *and $odiAttribute *eq minimumEventLoopLatency"
       }],
       "properties": [{
         "datatype": "string",
@@ -206,12 +346,14 @@
       }]
     }
   },
-  "displaylabel": "Node DC Runtime",
-  "description": "Node DC Runtime.",
+  "displaylabel": "Node Application Runtime",
+  "description": "Node Application Runtime",
   "entityTypes": ["nodeApplicationRuntime"],
   "source": "Collector",
   "type": "nodeDCRuntime",
   "version": "1.2",
   "uniqueId": "metadata\/\/1.2\/resourcemaps\/resourcemap\/nodeDCRuntime",
-  "tags": ["mapping"]
+  "tags": ["mapping",
+  "topLevelResource"],
+  "timestamp": "2018-05-11T14:46:30.385+08:00"
 }

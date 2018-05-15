@@ -6,12 +6,9 @@
         "node": "^6.0.0"
     },
     "dependencies": {
-        "chai": "^3.5.0",
-        "mocha": "^2.5.3",
         "log4js": "1.1.0",
         "should": "^9.0.0",
         "should-http": "0.0.4",
-        "https-proxy-agent": "1.0.0",
         "agent-base": "2",
         "debug": "2",
         "extend": "3",
@@ -26,18 +23,16 @@
         "unexpected": "^10.13.3"
     },
     "scripts": {
-        "pretest": "eslint .",
-        "test": "mocha ./test/testRestClient.js -t 2000 -R xunit",
-        "start": "node ./test/ut.js"
+        "pretest": "eslint ."
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/shiyanf/ibm_apm_restclient.git"
+        "url": "git+https://github.com/IBM-APM/node-ibmapm-embed.git"
     },
     "author": "shiyanf@cn.ibm.com",
-    "license": "ISC",
+    "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/shiyanf/ibm_apm_restclient/issues"
+        "url": "https://github.com/IBM-APM/node-ibmapm-embed/issues"
     },
-    "homepage": "https://github.com/shiyanf/ibm_apm_restclient#readme"
+    "homepage": "https://github.com/IBM-APM/node-ibmapm-embed#readme"
 }

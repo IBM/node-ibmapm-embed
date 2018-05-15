@@ -2,7 +2,105 @@
   "doctype": "mapping",
   "productCode": "KDN",
   "extraData": {
-    "entity-properties": [],
+    "entity-properties": [{
+      "displaylabel": "requestsSummary",
+      "members": [{
+        "metricIntervals": "1",
+        "use": "requestsSummary",
+        "keys": "",
+        "when": "$odiObject *eq requestsSummary",
+        "propertyIntervals": "1",
+        "tableName": "requestsSummary"
+      }],
+      "description": "requestsSummary",
+      "overrides": [{
+        "set": ["$odiAttribute *eq requestName",
+        "$odiLabel *eq Request Name",
+        "$odiDescription *eq The request's Name.",
+        "$fieldRequired *eq true",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq requestsSummary *and $odiAttribute *eq requestName"
+      },
+      {
+        "set": ["$odiAttribute *eq requestMethod",
+        "$odiLabel *eq Request Method",
+        "$odiDescription *eq The request's Method.",
+        "$fieldRequired *eq true",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq requestsSummary *and $odiAttribute *eq requestMethod"
+      },
+      {
+        "set": ["$odiAttribute *eq resourceID",
+        "$odiLabel *eq Resource ID",
+        "$odiDescription *eq The resource ID.",
+        "$fieldRequired *eq true",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq requestsSummary *and $odiAttribute *eq resourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq runtimeResourceID",
+        "$odiLabel *eq Runtime Resource ID",
+        "$odiDescription *eq The runtime resource ID.",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq requestsSummary *and $odiAttribute *eq runtimeResourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq npmResourceID",
+        "$odiLabel *eq NPM Resource ID",
+        "$odiDescription *eq The npm resource ID.",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq requestsSummary *and $odiAttribute *eq npmResourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq applicationInstanceResourceID",
+        "$odiLabel *eq Application Instance Resource ID",
+        "$odiDescription *eq The a pplication instance resource ID.",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq requestsSummary *and $odiAttribute *eq applicationInstanceResourceID"
+      },
+      {
+        "set": ["$odiAttribute *eq _componentType",
+        "$odiLabel *eq Component Type",
+        "$odiDescription *eq The component type.",
+        "$fieldRequired *eq true",
+        "$fieldOutput *eq property",
+        "$odiDataType *eq string"],
+        "when": "$odiObject *eq requestsSummary *and $odiAttribute *eq _componentType"
+      },
+      {
+        "set": ["$odiAttribute *eq averageResponseTime",
+        "$odiLabel *eq Average Response Time",
+        "$odiDescription *eq The average response time of the certain request in the last minute",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq int",
+        "$useUnits *eq milliseconds"],
+        "when": "$odiObject *eq requestsSummary *and $odiAttribute *eq averageResponseTime"
+      },
+      {
+        "set": ["$odiAttribute *eq hitCountInMinute",
+        "$odiLabel *eq Hit Count in Minute",
+        "$odiDescription *eq The hit counts of the certain request in the last minute",
+        "$fieldOutput *eq metric",
+        "$odiDataType *eq int",
+        "$useUnits *eq requests"],
+        "when": "$odiObject *eq requestsSummary *and $odiAttribute *eq hitCountInMinute"
+      }],
+      "type": "requestsSummary",
+      "uniqueId": "metadata\/\/1.2\/resourcemaps\/resourcemap\/nodeDCApplication\/requestsSummary",
+      "properties": [{
+        "datatype": "string",
+        "values": ["Resource"],
+        "displaylabel": "Class",
+        "name": "Class",
+        "description": ""
+      }]
+    }],
     "resource-properties": {
       "relationships": [],
       "members": [{
@@ -546,5 +644,7 @@
   "type": "nodeDCApplication",
   "version": "1.2",
   "uniqueId": "metadata\/\/1.2\/resourcemaps\/resourcemap\/nodeDCApplication",
-  "tags": ["mapping"]
+  "tags": ["mapping",
+  "topLevelResource"],
+  "timestamp": "2018-05-11T14:29:35.261+08:00"
 }
