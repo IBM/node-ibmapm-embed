@@ -14,7 +14,7 @@ application:
 3. In the manifest.yml file of your application or the IBM Cloud UI, set the following variables:
     ```
     env:
-    IBM_APM_INGRESS_URL: 'https://hcdemo.test.perfmgmt.ibm.com/1.0/data/'
+    IBM_APM_SERVER_INGRESS_URL: 'https://hcdemo.test.perfmgmt.ibm.com/1.0/data/'
     IBM_APM_ACCESS_TOKEN: <Base64_encoded_keyfile_password>
     ```
     where *`<Base64_encoded_keyfile_password>`* is the Base64 encoded password with the prefix of plain text authentication type. For example, if the plain text password is Basic base64, the encrypted password is Basic cGk0Ym11c2VyOkluR1RwbDdkIQ==.

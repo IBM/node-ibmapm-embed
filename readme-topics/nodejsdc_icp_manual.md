@@ -17,7 +17,7 @@ Node.js data collector for data collection.
    metadata:
      name: apm-server-config
    data:
-     ibm_apm_ingress_url: apm_for_devops_server_url
+     ibm_apm_server_ingress_url: apm_for_devops_server_url
 
    where, apm_for_devops_server_url is the base64 encoded URL of
    the APM for DevOps server. For example, on a Linux system run
@@ -82,11 +82,11 @@ Node.js data collector for data collection.
 
              - name: APPLICATION_NAME
                value: your_app_name
-             - name: IBM_APM_INGRESS_URL
+             - name: IBM_APM_SERVER_INGRESS_URL
                valueFrom:
                  secretKeyRef:
                    name: apm-server-config
-                   key: ibm_apm_ingress_url
+                   key: ibm_apm_server_ingress_url
                    optional: true
 
 10. For the configurations to take effect, run the following

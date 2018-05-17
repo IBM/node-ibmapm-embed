@@ -2,6 +2,15 @@
 [![Build Status](https://travis-ci.org/IBM-APM/node-ibmapm-embed.svg?branch=master)](https://travis-ci.org/IBM-APM/node-ibmapm-embed)
 [![codebeat badge](https://codebeat.co/badges/c53e9598-a0c6-40e3-8d25-40a4eeaadf07)](https://codebeat.co/projects/github-com-ibm-apm-node-ibmapm-embed-master)
 [![codecov](https://codecov.io/gh/IBM-APM/node-ibmapm-embed/branch/master/graph/badge.svg)](https://codecov.io/gh/IBM-APM/node-ibmapm-embed)
+Table of Contents
+=================
+* [Overview](#overview)
+* [Downloading the latest ibmapm package](#downloading-the-latest-ibmapm-package) (internal use only)
+* [Configuring the Node.js application monitoring using the Winterfell server](#configuring-the-nodejs-application-monitoring-using-the-winterfell-server)
+    * [Monitoring Node.js applications in IBM Cloud Private](#monitoring-nodejs-applications-in-ibm-cloud-private)
+    * [Monitoring on-premises Node.js applications](#monitoring-on-premises-nodejs-applications)
+* [Configuring Node.js application monitoring using the Cloud APM v8 server](#configuring-nodejs-application-monitoring-using-the-cloud-apm-v8-server)
+* [Configuring Node.js application monitoring using the BAM server](#configuring-nodejs-application-monitoring-using-the-bam-server)
 ## Overview
 The Node.js data collector can provide you with visibility and control of your Node.js applications, and help you ensure optimal performance and efficient use of resources. You can reduce and prevent application crashes and slowdowns around the clock, as the data collector assists you in detecting, diagnosing and isolating performance issues.
 
@@ -25,7 +34,9 @@ When the data collector is configured to connect to the Winterfell server, you c
 ### Monitoring Node.js applications in IBM Cloud Private
 To monitor Node.js applications in IBM Cloud Private, different procedures apply depending on whether your Java-based microservices are created with IBM Microservice Builder or not.
 
-Documentation is still in draft and will be published on the IBM Knowledge Center at GA of Winterfell release. For the always up-to-date internal doc under test, see the [node_dc_for_devops.pdf](https://github.ibm.com/APM/Nodejs-Data-Collector/blob/master/readme-topics/node_dc_for_devops.pdf).
+For internal testing purpose, download the latest data collector build and follow the [simplified procedure](readme-topics/nodejsdc-internal.md).
+
+Formal documentation is still in draft and will be published on the IBM Knowledge Center at GA of Winterfell release. For the always up-to-date internal doc for testing, see [Winterfell Knowledge Center](https://www-03preprod.ibm.com/support/knowledgecenter/SS8G7U_18.2.0/com.ibm.icam.doc/content/deploy_dc_intro.htm) (preproduction).
 
 
 ### Monitoring on-premises Node.js applications
@@ -56,5 +67,3 @@ To connect the data collector to a BAM server, choose one of the following optio
 - [Bind the Availability Monitoring service to the data collector](readme-topics/connect_bam_service.md)
 
 - [Set the environment variables directly](readme-topics/set_var_bam.md)
-
-

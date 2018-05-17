@@ -8,12 +8,12 @@
 3. Set the following two environment variables to specify the Node.js application name and the URL for the Winterfell server:
 
     - APPLICATION_NAME
-    - IBM_APM_INGRESS_URL
+    - IBM_APM_SERVER_INGRESS_URL
     
     For example, on a Linux system, run the following commands to set the environment variables:
     <pre> 
     export APPLICATION_NAME=<i>nodejs_app_name</i>
-    export IBM_APM_INGRESS_URL=<i>winterfell_server_url</i>
+    export IBM_APM_SERVER_INGRESS_URL=<i>winterfell_server_url</i>
     </pre>
 4. Run the following command to install the ibmapm dependency:
     <pre>npm install ibmapm</pre>

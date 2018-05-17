@@ -20,7 +20,7 @@
       metadata:
         name: apm-server-config
       data:
-        ibm_apm_ingress_url: apm_for_devops_server_url
+        ibm_apm_server_ingress_url: apm_for_devops_server_url
 
    *  For the data collector to connect to V8.1.4 Cloud APM
       server:
