@@ -1,0 +1,640 @@
+{
+  "extraData": {
+    "components": {
+      "requestsSummary": {
+        "displaylabel": "requestsSummary",
+        "name": "requestsSummary",
+        "description": "requestsSummary",
+        "metrics": {
+          "averageResponseTime": {
+            "dataType": "int",
+            "displaylabel": "Average Response Time",
+            "name": "Average Response Time",
+            "description": "The average response time of the certain request in the last minute",
+            "units": "milliseconds",
+            "tags": {
+              "groupName": "requestsSummary"
+            }
+          },
+          "hitCountInMinute": {
+            "dataType": "int",
+            "displaylabel": "Hit Count in Minute",
+            "name": "Hit Count in Minute",
+            "description": "The hit counts of the certain request in the last minute",
+            "units": "requests",
+            "tags": {
+              "groupName": "requestsSummary"
+            }
+          }
+        },
+        "dimensions": {
+          "requestName": {
+            "dataType": "string",
+            "displaylabel": "Request Name",
+            "name": "Request Name",
+            "description": "The request's Name.",
+            "required": "y"
+          },
+          "resourceID": {
+            "dataType": "string",
+            "displaylabel": "Resource ID",
+            "name": "Resource ID",
+            "description": "The resource ID.",
+            "required": "y"
+          },
+          "npmResourceID": {
+            "dataType": "string",
+            "displaylabel": "NPM Resource ID",
+            "name": "NPM Resource ID",
+            "description": "The npm resource ID."
+          },
+          "requestMethod": {
+            "dataType": "string",
+            "displaylabel": "Request Method",
+            "name": "Request Method",
+            "description": "The request's Method.",
+            "required": "y"
+          },
+          "applicationInstanceResourceID": {
+            "dataType": "string",
+            "displaylabel": "Application Instance Resource ID",
+            "name": "Application Instance Resource ID",
+            "description": "The a pplication instance resource ID."
+          },
+          "_componentType": {
+            "dataType": "string",
+            "displaylabel": "Component Type",
+            "name": "Component Type",
+            "description": "The component type.",
+            "required": "y"
+          },
+          "runtimeResourceID": {
+            "dataType": "string",
+            "displaylabel": "Runtime Resource ID",
+            "name": "Runtime Resource ID",
+            "description": "The runtime resource ID."
+          }
+        }
+      }
+    },
+    "metrics": {
+      "averageResponseTime": {
+        "displaylabel": "Average Response Time",
+        "dataType": "int",
+        "name": "Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mysqlRequestRate": {
+        "displaylabel": "Mysql Request Rate",
+        "dataType": "double",
+        "name": "Mysql Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_redisMaxRespTime": {
+        "displaylabel": "Redis Slowest Response Time",
+        "dataType": "int",
+        "name": "Redis Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "slowestResponseTime": {
+        "displaylabel": "Slowest Response Time",
+        "dataType": "int",
+        "name": "Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "requestRate": {
+        "displaylabel": "Request Rate",
+        "dataType": "double",
+        "name": "Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mqlightRequestRate": {
+        "displaylabel": "Mqlight Request Rate",
+        "dataType": "double",
+        "name": "Mqlight Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_socketioAverageResponseTime": {
+        "displaylabel": "Socketio Average Response Time",
+        "dataType": "int",
+        "name": "Socketio Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_leveldbAverageResponseTime": {
+        "displaylabel": "Leveldb Average Response Time",
+        "dataType": "int",
+        "name": "Leveldb Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_strongoracleMaxRespTime": {
+        "displaylabel": "Strongoracle Slowest Response Time",
+        "dataType": "int",
+        "name": "Strongoracle Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mqlightMaxRespTime": {
+        "displaylabel": "Mqlight Slowest Response Time",
+        "dataType": "int",
+        "name": "Mqlight Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "sysMemoryFree": {
+        "displaylabel": "Free Memory of System",
+        "dataType": "int",
+        "name": "Free Memory of System",
+        "description": "The total amount of free RAM available on the system in Megabytes.",
+        "units": "megabytes",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mqlightAverageResponseTime": {
+        "displaylabel": "Mqlight Average Response Time",
+        "dataType": "int",
+        "name": "Mqlight Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_leveldbRequestRate": {
+        "displaylabel": "Leveldb Request Rate",
+        "dataType": "double",
+        "name": "Leveldb Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_socketioMaxRespTime": {
+        "displaylabel": "Socketio Slowest Response Time",
+        "dataType": "int",
+        "name": "Socketio Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_strongoracleRequestRate": {
+        "displaylabel": "Strongoracle Request Rate",
+        "dataType": "double",
+        "name": "Strongoracle Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_postgresqlMaxRespTime": {
+        "displaylabel": "postgresql Slowest Response Time",
+        "dataType": "int",
+        "name": "postgresql Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "cpuPercentage": {
+        "displaylabel": "Processor Percent of Application",
+        "dataType": "double",
+        "name": "Processor Percent of Application",
+        "description": "The percentage of the processor that is used by the application.",
+        "units": "percent",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_socketioRequestRate": {
+        "displaylabel": "Socketio Request Rate",
+        "dataType": "double",
+        "name": "Socketio Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "sysMemoryAll": {
+        "displaylabel": "Total Memory of System",
+        "dataType": "int",
+        "name": "Total Memory of System",
+        "description": "The total amount of RAM available on the system in Megabytes.",
+        "units": "megabytes",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_leveldbMaxRespTime": {
+        "displaylabel": "Leveldb Slowest Response Time",
+        "dataType": "int",
+        "name": "Leveldb Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_riakRequestRate": {
+        "displaylabel": "Riak Request Rate",
+        "dataType": "double",
+        "name": "Riak Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "virtualMemory": {
+        "displaylabel": "Virtual Memory of Application",
+        "dataType": "int",
+        "name": "Virtual Memory of Application",
+        "description": "The virtual memory that is used by the application, in megabytes.",
+        "units": "megabytes",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_oracleRequestRate": {
+        "displaylabel": "Oracle Request Rate",
+        "dataType": "double",
+        "name": "Oracle Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "memoryTotalSize": {
+        "displaylabel": "Total Memory of Application",
+        "dataType": "int",
+        "name": "Total Memory of Application",
+        "description": "The total amount of memory used by the Node.js application that cannot be shared with other processes, in Megabytes.",
+        "units": "megabytes",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_riakMaxRespTime": {
+        "displaylabel": "Riak Slowest Response Time",
+        "dataType": "int",
+        "name": "Riak Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "sysMemoryUsed": {
+        "displaylabel": "Used Memory of System",
+        "dataType": "int",
+        "name": "Used Memory of System",
+        "description": "The total amount of RAM in use on the system in Megabytes.",
+        "units": "megabytes",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_oracleMaxRespTime": {
+        "displaylabel": "Oracle Slowest Response Time",
+        "dataType": "int",
+        "name": "Oracle Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_strongoracleAverageResponseTime": {
+        "displaylabel": "Strongoracle Average Response Time",
+        "dataType": "int",
+        "name": "Strongoracle Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mysqlAverageResponseTime": {
+        "displaylabel": "Mysql Average Response Time",
+        "dataType": "int",
+        "name": "Mysql Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "memoryRssSize": {
+        "displaylabel": "Physical Memory of Application",
+        "dataType": "int",
+        "name": "Physical Memory of Application",
+        "description": "The physical memory that is used by the application, in megabytes.",
+        "units": "megabytes",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_oracledbMaxRespTime": {
+        "displaylabel": "Oracledb Slowest Response Time",
+        "dataType": "int",
+        "name": "Oracledb Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mongoAverageResponseTime": {
+        "displaylabel": "Mongo Average Response Time",
+        "dataType": "int",
+        "name": "Mongo Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_memcachedAverageResponseTime": {
+        "displaylabel": "Memcached Average Response Time",
+        "dataType": "int",
+        "name": "Memcached Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_memcachedMaxRespTime": {
+        "displaylabel": "Memcached Slowest Response Time",
+        "dataType": "int",
+        "name": "Memcached Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "sysCpuPercentage": {
+        "displaylabel": "Processor Percent of System",
+        "dataType": "double",
+        "name": "Processor Percent of System",
+        "description": "The percentage of CPU used by the system as a whole. This is a value between 0.0 and 1.0.",
+        "units": "percent",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_postgresqlRequestRate": {
+        "displaylabel": "postgresql Request Rate",
+        "dataType": "double",
+        "name": "postgresql Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mqttAverageResponseTime": {
+        "displaylabel": "Mqtt Average Response Time",
+        "dataType": "int",
+        "name": "Mqtt Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_oracledbRequestRate": {
+        "displaylabel": "Oracledb Request Rate",
+        "dataType": "double",
+        "name": "Oracledb Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_memcachedRequestRate": {
+        "displaylabel": "Memcached Request Rate",
+        "dataType": "double",
+        "name": "Memcached Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mqttRequestRate": {
+        "displaylabel": "Mqtt Request Rate",
+        "dataType": "double",
+        "name": "Mqtt Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_oracledbAverageResponseTime": {
+        "displaylabel": "Oracledb Average Response Time",
+        "dataType": "int",
+        "name": "Oracledb Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mongoRequestRate": {
+        "displaylabel": "Mongo Request Rate",
+        "dataType": "double",
+        "name": "Mongo Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_postgresqlAverageResponseTime": {
+        "displaylabel": "postgresql Average Response Time",
+        "dataType": "int",
+        "name": "postgresql Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mysqlMaxRespTime": {
+        "displaylabel": "Mysql Slowest Response Time",
+        "dataType": "int",
+        "name": "Mysql Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "upTime": {
+        "displaylabel": "Elapsed Time since Restart",
+        "dataType": "string",
+        "name": "Elapsed Time since Restart",
+        "description": "The time since the last restart.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mongoMaxRespTime": {
+        "displaylabel": "Mongo Slowest Response Time",
+        "dataType": "int",
+        "name": "Mongo Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_redisRequestRate": {
+        "displaylabel": "Redis Request Rate",
+        "dataType": "double",
+        "name": "Redis Request Rate",
+        "description": "The application request rate at the latest sampling interval.",
+        "units": "requests/minute",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_riakAverageResponseTime": {
+        "displaylabel": "Riak Average Response Time",
+        "dataType": "int",
+        "name": "Riak Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_redisAverageResponseTime": {
+        "displaylabel": "Redis Average Response Time",
+        "dataType": "int",
+        "name": "Redis Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_mqttMaxRespTime": {
+        "displaylabel": "Mqtt Slowest Response Time",
+        "dataType": "int",
+        "name": "Mqtt Slowest Response Time",
+        "description": "The slowest response time at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      },
+      "reqSummary_oracleAverageResponseTime": {
+        "displaylabel": "Oracle Average Response Time",
+        "dataType": "int",
+        "name": "Oracle Average Response Time",
+        "description": "The average response time of the application at the latest sampling interval.",
+        "units": "milliseconds",
+        "tags": {
+          "groupName": "nodeDCApplication"
+        }
+      }
+    },
+    "dimensions": {
+      "resourceID": {
+        "displaylabel": "Resource ID",
+        "dataType": "string",
+        "name": "Resource ID",
+        "description": "The resource ID.",
+        "required": "y",
+        "enumValues": {
+          "Available": "Not"
+        }
+      },
+      "npmResourceID": {
+        "displaylabel": "NPM Resource ID",
+        "dataType": "string",
+        "name": "NPM Resource ID",
+        "description": "The npm resource ID."
+      },
+      "applicationInstanceResourceID": {
+        "displaylabel": "Application Instance Resource ID",
+        "dataType": "string",
+        "name": "Application Instance Resource ID",
+        "description": "The a pplication instance resource ID."
+      },
+      "_componentType": {
+        "displaylabel": "Component Type",
+        "dataType": "string",
+        "name": "Component Type",
+        "description": "The component type.",
+        "required": "y"
+      },
+      "runtimeResourceID": {
+        "displaylabel": "Runtime Resource ID",
+        "dataType": "string",
+        "name": "Runtime Resource ID",
+        "description": "The runtime resource ID."
+      }
+    }
+  },
+  "displaylabel": "Node DC Application",
+  "origin": "KDN",
+  "name": "Node DC Application",
+  "description": "Node.js application and status information, like file name, path, port and cluster.",
+  "entityTypes": ["application"],
+  "metadataVersion": "1.2",
+  "uniqueId": "metadata//1.2/resourcetypes/resourcetype/application",
+  "tags": ["metadata",
+  "topLevelResource"],
+  "timestamp": "2018-05-11T14:29:35.254+08:00"
+}

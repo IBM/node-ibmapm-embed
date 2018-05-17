@@ -1,0 +1,10 @@
+node_modules/
+.vscode/
+.project
+.settings/
+test-results.xml
+dchome/
+.nyc_output/
+coverage/
+nodejs_*.log
+resourceRegistry.log

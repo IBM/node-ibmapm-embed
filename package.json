@@ -1,0 +1,80 @@
+{
+    "name": "ibmapm-embed",
+    "main": "./index.js",
+    "version": "1.0.7",
+    "readme": "Node.js Data Collector",
+    "description": "Node.js data collector for IBM BAM",
+    "dependencies": {
+        "agent-base": "^2",
+        "debug": "^2",
+        "extend": "^3",
+        "kubernetes-client": "^3.16.0",
+        "log4js": "^0.6.38",
+        "properties": "^1.2.1",
+        "request": "^2.72.0",
+        "uuid": "^2.0.2"
+    },
+    "devDependencies": {
+        "chai": "^3.5.0",
+        "eslint": "^3.19.0",
+        "eslint-config-strongloop": "^2.1.0",
+        "should": "^9.0.0",
+        "should-http": "0.0.4",
+        "unexpected": "^10.13.3",
+        "mocha": "^3.2.0",
+        "mocha-junit-reporter": "^1.12.0",
+        "async": "^0.9.0",
+        "coveralls": "^2.11.2",
+        "intercept-stdout": "~0.1.2",
+        "nyc": "^11.0.2",
+        "codecov": "2.x",
+        "tap": "7.x"
+    },
+    "scripts": {
+        "pretest": "eslint .",
+        "test": "tap --reporter tap --timeout=120 tests/*tests.js ",
+        "travis": "tap --reporter tap --timeout=120 tests/*tests.js  --coverage",
+        "posttravis": " tap --coverage-report=lcov && codecov --disable=gcov"
+    },
+    "license": "Apache-2.0",
+    "bugs": {
+        "email": "yuecchen@cn.ibm.com",
+        "url": "https://github.com/IBM-APM/node-ibmapm-embed/issues"
+    },
+    "author": {
+        "name": "Yue Chen",
+        "email": "yuecchen@cn.ibm.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:IBM-APM/node-ibmapm-embed.git"
+    },
+    "contributors": [{
+            "name": "Hui Jun Song",
+            "email": "songhj@cn.ibm.com"
+        },
+        {
+            "name": "Yue Chen",
+            "email": "yuecchen@cn.ibm.com"
+        },
+        {
+            "name": "Ravi Gadekarla",
+            "email": "rgadekar@us.ibm.com"
+        },
+        {
+            "name": "Chi Yang Li",
+            "email": "bjcyli@cn.ibm.com"
+        },
+        {
+            "name": "Yanfeng Shi",
+            "email": "shiyanf@cn.ibm.com"
+        }
+    ],
+    "keywords": [
+        "appmetrics",
+        "apm",
+        "ibm",
+        "performance",
+        "monitoring"
+    ]
+}

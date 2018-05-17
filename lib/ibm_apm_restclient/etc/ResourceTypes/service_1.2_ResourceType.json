@@ -1,0 +1,56 @@
+{
+    "extraData": {
+        "metrics": {
+            "averageServiceResponseTime": {
+                "dataType": "float",
+                "name": "Average Service Response Time",
+                "description": "The average service response time of requests belonging to service in the last minute",
+                "units": "milliseconds"
+            },
+            "throughput": {
+                "dataType": "int",
+                "name": "Throughput",
+                "description": "The request throughput in the last minute",
+                "units": "requests"
+            },
+            "dimensions": {
+                "requestName": {
+                    "dataType": "string",
+                    "name": "Request Name",
+                    "description": "The request's Name.",
+                    "required": "y",
+                    "enumValues": {
+                        "Available": "Not"
+                    }
+                },
+                "resourceID": {
+                    "dataType": "string",
+                    "name": "Resource ID of Service",
+                    "description": "The resource ID of the service",
+                    "required": "y",
+                    "enumValues": {
+                        "Available": "Not"
+                    }
+                },
+                "serviceInstanceResourceID": {
+                    "displaylabel": "Service Instance Resource ID",
+                    "dataType": "string",
+                    "name": "Service Instance Resource ID",
+                    "description": "The service instance resource ID."
+                }
+            }
+        }
+    },
+    "origin": "LWDC",
+    "name": "Service",
+    "description": "Service information",
+    "entityTypes": [
+        "service"
+    ],
+    "metadataVersion": "1.2",
+    "uniqueId": "metadata//1.2/resourcetypes/resourcetype/service",
+    "tags": [
+        "metadata",
+        "topLevelResource"
+    ]
+}
