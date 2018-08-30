@@ -1,7 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/439d3e6d7897457fbedaea71c14f7a6a)](https://www.codacy.com/app/shiyanf/node-ibmapm-embed?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=IBM-APM/node-ibmapm-embed&amp;utm_campaign=Badge_Grade)
-[![Build Status](https://travis-ci.org/IBM-APM/node-ibmapm-embed.svg?branch=master)](https://travis-ci.org/IBM-APM/node-ibmapm-embed)
-[![codebeat badge](https://codebeat.co/badges/c53e9598-a0c6-40e3-8d25-40a4eeaadf07)](https://codebeat.co/projects/github-com-ibm-apm-node-ibmapm-embed-master)
-[![codecov](https://codecov.io/gh/IBM-APM/node-ibmapm-embed/branch/master/graph/badge.svg)](https://codecov.io/gh/IBM-APM/node-ibmapm-embed)
+
 Table of Contents
 =================
 - [Table of Contents](#table-of-contents)
