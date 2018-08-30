@@ -89,9 +89,10 @@ var data = {
 tap.plan(2);
 tap.tearDown(function() {
     console.log('End of request manager test.');
+    global.NodeDCLoaded = false;
     var dc = require('../index');
-    var bamplugin = require('../lib/ibm_apm_restclient/lib/plugins/BAMPlugin');
-    var biplugin = require('../lib/ibm_apm_restclient/lib/plugins/BIPlugin');
+    var bamplugin = require('../node_modules/ibmapm-restclient/lib/plugins/BAMPlugin');
+    var biplugin = require('../node_modules/ibmapm-restclient/lib/plugins/BIPlugin');
     dc.stopDC();
     bamplugin.stop();
     biplugin.stop();

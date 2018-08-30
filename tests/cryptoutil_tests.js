@@ -4,7 +4,7 @@ process.env.MONITORING_SERVER_TYPE = 'BAM';
 process.env.KNJ_LOG_LEVEL = 'all';
 process.env.KNJ_LOG_TO_CONSOLE = false;
 var tap = require('tap');
-var cryptoutil = require('../lib/ibm_apm_restclient/lib/plugins/cryptoutil');
+var cryptoutil = require('../node_modules/ibmapm-restclient/lib/plugins/cryptoutil');
 
 tap.plan(1);
 tap.tearDown(function() {

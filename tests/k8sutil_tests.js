@@ -4,7 +4,7 @@ process.env.MONITORING_SERVER_TYPE = 'BAM';
 process.env.KNJ_LOG_LEVEL = 'all';
 process.env.KNJ_LOG_TO_CONSOLE = true;
 var tap = require('tap');
-var k8sutil = require('../lib/ibm_apm_restclient/lib/tools/k8sutil');
+var k8sutil = require('../node_modules/ibmapm-restclient/lib/tools/k8sutil');
 
 tap.plan(1);
 tap.tearDown(function() {
@@ -15,7 +15,6 @@ tap.test('k8sutil.', function(t) {
     var isicp = k8sutil.isICP();
     t.ok(!isicp, 'Is not a ICp env.');
 
-    k8sutil.checkIngressUrl();
     k8sutil.getIngressUrl();
     k8sutil.getContainerID();
     k8sutil.getContainerDetail();

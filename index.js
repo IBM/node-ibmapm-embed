@@ -93,7 +93,7 @@ if (process.env.MONITORING_SERVER_TYPE === 'BAM') {
 commontools.enableTrace(appmetrics);
 
 // Start DC in case rest client is ready to send payload
-var restClient = require('./lib/ibm_apm_restclient/lib/restclient/httpsender.js');
+var restClient = require('ibmapm-restclient');
 restClient.checkReadyStatus(startDC);
 
 var DCStarted = false;

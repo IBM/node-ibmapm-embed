@@ -4,14 +4,18 @@
 [![codecov](https://codecov.io/gh/IBM-APM/node-ibmapm-embed/branch/master/graph/badge.svg)](https://codecov.io/gh/IBM-APM/node-ibmapm-embed)
 Table of Contents
 =================
-* [Overview](#overview)
-* [Downloading the latest ibmapm package](#downloading-the-latest-ibmapm-package) (internal use only)
-* [Configuring the Node.js application monitoring using the Winterfell server](#configuring-the-nodejs-application-monitoring-using-the-winterfell-server)
-    * [Monitoring Node.js applications in IBM Cloud Private](#monitoring-nodejs-applications-in-ibm-cloud-private)
-    * [Monitoring on-premises Node.js applications](#monitoring-on-premises-nodejs-applications)
-* [Configuring Node.js application monitoring using the Cloud APM v8 server](#configuring-nodejs-application-monitoring-using-the-cloud-apm-v8-server)
-* [Configuring Node.js application monitoring using the BAM server](#configuring-nodejs-application-monitoring-using-the-bam-server)
+- [Table of Contents](#table-of-contents)
+    - [Overview](#overview)
+    - [Downloading the latest ibmapm package](#downloading-the-latest-ibmapm-package)
+    - [Configuring the Node.js application monitoring using the Winterfell server](#configuring-the-nodejs-application-monitoring-using-the-winterfell-server)
+        - [Monitoring Node.js applications in IBM Cloud Private](#monitoring-nodejs-applications-in-ibm-cloud-private)
+        - [Monitoring on-premises Node.js applications](#monitoring-on-premises-nodejs-applications)
+    - [Configuring Node.js application monitoring using the Cloud APM v8 server](#configuring-nodejs-application-monitoring-using-the-cloud-apm-v8-server)
+    - [Configuring Node.js application monitoring using the BAM server](#configuring-nodejs-application-monitoring-using-the-bam-server)
+
 ## Overview
+This Node.js data collector is only applicable for integrating with appmetrics. For users of appmetrics 4.0 or later, the Node.js data collector (ibmapm-embed) has been integrated with appmetrics. When you install appmetrics, the Node.js data collector is automatically installed in your application. 
+
 The Node.js data collector can provide you with visibility and control of your Node.js applications, and help you ensure optimal performance and efficient use of resources. You can reduce and prevent application crashes and slowdowns around the clock, as the data collector assists you in detecting, diagnosing and isolating performance issues.
 
 The Node.js data collector helps you to manage the performance and availability of the following:
@@ -45,16 +49,17 @@ To monitor on-premises Node.js applications, follow the instructions as document
 ## Configuring Node.js application monitoring using the Cloud APM v8 server
 You can use the Node.js data collector, which is delivered in the Cloud APM v8 product, to monitor your Liberty applications running locally, in IBM Cloud, or in IBM Cloud Private. The data collector is configured to connect to the Cloud APM v8 server.
 
+
 Different procedures apply depending on whether you are using Cloud APM (SaaS) or Cloud APM, Private (on-premises).
 
 - If you are a Cloud APM (SaaS) user, complete the following procedures:
 > - [Configuring the data collector for IBM Cloud applications](https://www.ibm.com/support/knowledgecenter/SSMKFH/com.ibm.apmaas.doc/install/bluemix_nodejs_config_dc.htm)
-> - [Configuring the data collector for local applications](https://www.ibm.com/support/knowledgecenter/SSMKFH/com.ibm.apmaas.doc/install/nodejs_config_dc.htm)
+> - [Configuring the data collector for local applications](readme-topics/local-nodejs-apm-saas.md)
 > - [Configuring method trace and transaction tracking](readme-topics/nodejsdc_mt_tt.md)
 
 - If you are a Cloud APM, Private (on-premises) user, complete the following procedures:
 > - [Configuring the data collector for Bluemix applications](https://www.ibm.com/support/knowledgecenter/SSHLNR_8.1.4/com.ibm.pm.doc/install/bluemix_nodejs_config_dc.htm)
-> - [Configuring the data collector for local applications](https://www.ibm.com/support/knowledgecenter/SSHLNR_8.1.4/com.ibm.pm.doc/install/nodejs_config_dc.htm)
+> - [Configuring the data collector for local applications](readme-topics/local-nodejs-apm-onprem.md)
 > - [Configuring the data collector for applications in IBM Cloud Private](readme-topics/nodejsdc_icp_apm_server.md)
 > - [Configuring method trace and transaction tracking](readme-topics/nodejsdc_mt_tt.md)
 

@@ -48,8 +48,8 @@ var level = 1;
 tap.plan(1);
 tap.tearDown(function() {
     console.log('End of AAR tools.');
-    var bamplugin = require('../lib/ibm_apm_restclient/lib/plugins/BAMPlugin');
-    var biplugin = require('../lib/ibm_apm_restclient/lib/plugins/BIPlugin');
+    var bamplugin = require('../node_modules/ibmapm-restclient/lib/plugins/BAMPlugin');
+    var biplugin = require('../node_modules/ibmapm-restclient/lib/plugins/BIPlugin');
     bamplugin.stop();
     biplugin.stop();
 });
