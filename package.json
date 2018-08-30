@@ -35,7 +35,7 @@
     "license": "Apache-2.0",
     "bugs": {
         "email": "yuecchen@cn.ibm.com",
-        "url": "https://github.com/IBM-APM/node-ibmapm-embed/issues"
+        "url": "https://github.com/IBM/node-ibmapm-embed/issues"
     },
     "author": {
         "name": "Yue Chen",
@@ -43,7 +43,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git@github.com:IBM-APM/node-ibmapm-embed.git"
+        "url": "git@github.com:IBM/node-ibmapm-embed.git"
     },
     "contributors": [{
             "name": "Hui Jun Song",
