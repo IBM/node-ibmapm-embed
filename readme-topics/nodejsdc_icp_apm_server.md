@@ -6,7 +6,7 @@ You can configure the Node.js data collector to monitor applications in IBM Clou
 > - The URL of the target Cloud APM v8 server
 > - The location of the key file, either a URL to download the key file or a local file directory (required only by secure HTTPS connection)
 > - The key file password that is paired with the key file (required only by secure HTTPS connection)
-- If you use Microservice Builder to deploy your Node.js-based microservies, it is assumed that the development environment for Microservice Builder is set up. If not, follow the instructions in [Setting up your development environment](https://www.ibm.com/support/knowledgecenter/SS5PWC/setup.html).
+- If you use Microservice Builder to deploy your Node.js-based microservies, it is assumed that the development environment for Microservice Builder is set up. If not, follow the instructions in [Setting up your development environment](https://microclimate-dev2ops.github.io/gettingstarted).
 
 - The service account that you use to install and configure the data collector must have access to Kubernetes resources. You can run the following commands on the Kubernetes master node to determine if the data collector has access to resources by using your service account:
     
@@ -22,7 +22,7 @@ You can configure the Node.js data collector to monitor applications in IBM Clou
 
 ## Procedure
 
-### Deploying the Node.js application by using Microserver Builder with data collector installed
+### Deploying the Node.js application by using Microclimate with data collector installed
 
 If you deploy the Node.js-based microservices by using IBM Microservice Builder, theNode.js data collector is automatically installed in the microservices so you can start monitoring quickly. 
 
@@ -32,7 +32,7 @@ If you deploy the Node.js-based microservices by using IBM Microservice Builder,
 
    Remember: When prompted, choose <b>Node</b> as the language. For
    detailed instructions, see [Create and deploy a simple
-   microservice](https://www.ibm.com/support/knowledgecenter/SS5PWC/create_deploy_101.html).
+   microservice](https://microclimate-dev2ops.github.io/gettingstarted).
 
 2. Create a file named apm-server-config-secret.yaml on your local system and edit the file to add the following information:
 
@@ -60,7 +60,7 @@ Remember: All the above values should be base64 encoded values. You can run <cod
 
 <pre>kubectl create -f apm-server-config-secret.yaml</pre>
 
-4. Push the project to a new repository in the GitHub organization that the Microserver Builder pipeline is monitoring and is automatically built.
+4. Push the project to a new repository in the GitHub organization that the Microclimate pipeline is monitoring and is automatically built.
 
 ### Manually configuring data collection for Node.js application
 

@@ -21,7 +21,7 @@ Complete the following steps to install appmetrics with the Node.js data collect
 
 - Option 1: Set the **APM_BM_GATEWAY_URL** environment variable to specify the Cloud APM server URL. The format is <code>https://<i>server ip or hostname</i>:443</code> or <code>http://<i>server ip or hostname</i>:80</code>.
 
-- Option 2: Specify the Cloud APM server in the `\node_modules\ibmapm-embed\etc\global.environment` file.
+- Option 2: Specify the Cloud APM server in the `.\global.environment` file.
 
 **Tip:** For information about more supported environment variables, see [Customizing the Node.js data collector for on-premises applications](https://www.ibm.com/support/knowledgecenter/SSMKFH/com.ibm.apmaas.doc/install/customize_nodejs_dc.htm).
 
