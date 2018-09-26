@@ -20,6 +20,13 @@
         "counter": {
           "$latest": 3,
           "$counter": 3
+        },
+        "history": {
+          "$items": {
+            "averageResponseTime": "${metrics.averageResponseTime}",
+            "timestamp": "${timestamp}"
+          },
+          "$size": 1
         }
       }
     ],
@@ -49,6 +56,13 @@
         "counter": {
           "$latest": 3,
           "$counter": 3
+        },
+        "history": {
+          "$items": {
+            "averageResponseTime": "${metrics.averageResponseTime}",
+            "timestamp": "${timestamp}"
+          },
+          "$size": 1
         }
       }
     ],
@@ -78,6 +92,13 @@
         "counter": {
           "$latest": 3,
           "$counter": 3
+        },
+        "history": {
+          "$items": {
+            "averageResponseTime": "${metrics.slowestResponseTime}",
+            "timestamp": "${timestamp}"
+          },
+          "$size": 1
         }
       }
     ],
@@ -116,6 +137,13 @@
         "counter": {
           "$latest": 3,
           "$counter": 3
+        },
+        "history": {
+          "$items": {
+            "averageResponseTime": "${metrics.slowestResponseTime}",
+            "timestamp": "${timestamp}"
+          },
+          "$size": 1
         }
       }
     ],
@@ -145,6 +173,14 @@
         "counter": {
           "$latest": 3,
           "$counter": 3
+        },
+        "history": {
+          "$items": {
+            "averageResponseTime": "${metrics.averageServiceResponseTime}",
+            "requestName": "${tags.requestName}",
+            "timestamp": "${timestamp}"
+          },
+          "$size": 1
         }
       }
     ],
