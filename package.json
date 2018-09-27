@@ -1,7 +1,7 @@
 {
     "name": "ibmapm-embed",
     "main": "./index.js",
-    "version": "1.0.18",
+    "version": "1.0.19",
     "readme": "Node.js Data Collector",
     "description": "Node.js data collector for IBM BAM",
     "dependencies": {
