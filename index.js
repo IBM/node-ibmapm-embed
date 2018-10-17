@@ -21,7 +21,6 @@ if (!global.NodeDCLoaded) {
     return;
 }
 var appmetrics = global.Appmetrics;
-// var configsvc = require('./lib/tool/configureservice').ConfigureService;
 
 // initialize log
 if (!commontools.testTrue(process.env.KNJ_LOG_TO_FILE)) {
@@ -75,17 +74,6 @@ if (process.env.MONITORING_SERVER_TYPE === 'BAM') {
         global.KNJ_BAM_APPLICATION_TOPIC = 'applications';
     }
 }
-
-
-// configsvc.on('conf_update', function(conf) {
-//     logger.info('The configuration of DC is updated.', conf);
-//     if (conf) {
-//         process.env.ITCAM_DC_ENABLED = conf.ITCAM_DC_ENABLED;
-//         process.env.KNJ_ENABLE_TT = conf.KNJ_ENABLE_TT;
-//         process.env.KNJ_ENABLE_DEEPDIVE = conf.KNJ_ENABLE_DEEPDIVE;
-//         process.env.KNJ_DISABLE_METHODTRACE = conf.KNJ_DISABLE_METHODTRACE;
-//     }
-// });
 
 // initialize BAM configuration end
 
