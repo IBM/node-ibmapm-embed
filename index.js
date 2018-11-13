@@ -92,12 +92,12 @@ commontools.enableTrace(appmetrics);
 var restClient = require('ibmapm-restclient');
 restClient.checkReadyStatus(startDC);
 
-logger.info('== Data Collector version:', global.DC_VERSION);
-logger.info('== Capabilities:');
-logger.info('   |== Metrics:', 'Enabled');
-logger.info('   |== Diagnostic:', 'Disabled');
-logger.info('   |== Transaction Tracking:', 'Disabled');
-logger.info('== Supported Integrations:', 'IBM Cloud Application Management,',
+logger.debug('== Data Collector version:', global.DC_VERSION);
+logger.debug('== Capabilities:');
+logger.debug('   |== Metrics:', 'Enabled');
+logger.debug('   |== Diagnostic:', 'Disabled');
+logger.debug('   |== Transaction Tracking:', 'Disabled');
+logger.debug('== Supported Integrations:', 'IBM Cloud Application Management,',
     'IBM Cloud Application Performance Management');
 
 
