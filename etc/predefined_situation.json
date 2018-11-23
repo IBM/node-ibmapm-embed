@@ -25,15 +25,7 @@
                 },
                 "$size": 1
             }
-        }],
-        "subject":[],
-        "label": "Node.js_Average_Response_Time_High",
-        "evaluationPoint": "rte",
-        "resourceType": "nodeApplicationRuntime",
-        "version": "0.8"
-    },
-    {
-        "thresholds": [{
+        },{
             "severity": 1,
             "condition": {
                 "${metrics.averageResponseTime}": {
@@ -53,7 +45,7 @@
             }
         }],
         "subject":[],
-        "label": "Node.js_Average_Response_Time_Extreme_High",
+        "label": "Node.js_Average_Response_Time_High",
         "evaluationPoint": "rte",
         "resourceType": "nodeApplicationRuntime",
         "version": "0.8"
@@ -77,15 +69,7 @@
                 },
                 "$size": 1
             }
-        }],
-        "subject":[],
-        "label": "Node.js_Slowest_Response_Time_Extreme_High",
-        "evaluationPoint": "rte",
-        "resourceType": "nodeApplicationRuntime",
-        "version": "0.8"
-    },
-    {
-        "thresholds": [{
+        },{
             "severity": 4,
             "condition": {
                 "$and": [{
@@ -139,7 +123,10 @@
                 "$size": 1
             }
         }],
-        "subject":[],
+        "subject":[{
+            "id": "${tag.requestMethod}:${tags.requestName}",
+            "name": "${tag.requestMethod}: ${tags.requestName}"
+        }],
         "label": "Node.js_Request_Slow",
         "evaluationPoint": "rte",
         "resourceType": "nodeApplicationRuntime",
