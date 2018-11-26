@@ -4,19 +4,10 @@
             "condition": {
                 "$and": [{
                         "${metrics.averageResponseTime}": {
-                            "$gte": 2000
-                        }
-                    },
-                    {
-                        "${metrics.averageResponseTime}": {
-                            "$lt": 5000
+                            "$gte": 500
                         }
                     }
                 ]
-            },
-            "counter": {
-                "$latest": 3,
-                "$counter": 3
             },
             "history": {
                 "$items": {
@@ -29,7 +20,7 @@
             "severity": 1,
             "condition": {
                 "${metrics.averageResponseTime}": {
-                    "$gte": 5000
+                    "$gte": 2000
                 }
             },
             "counter": {
@@ -58,10 +49,6 @@
                     "$gte": 5000
                 }
             },
-            "counter": {
-                "$latest": 3,
-                "$counter": 3
-            },
             "history": {
                 "$items": {
                     "slowestResponseTime": "${metrics.slowestResponseTime}",
@@ -76,17 +63,8 @@
                         "${metrics.slowestResponseTime}": {
                             "$gte": 2000
                         }
-                    },
-                    {
-                        "${metrics.slowestResponseTime}": {
-                            "$lt": 5000
-                        }
                     }
                 ]
-            },
-            "counter": {
-                "$latest": 3,
-                "$counter": 3
             },
             "history": {
                 "$items": {
@@ -110,22 +88,19 @@
                     "$gte": 5000
                 }
             },
-            "counter": {
-                "$latest": 3,
-                "$counter": 3
-            },
             "history": {
                 "$items": {
                     "averageServiceResponseTime": "${metrics.averageServiceResponseTime}",
                     "requestName": "${tags.requestName}",
+                    "requestMethod": "${tags.requestMethod}",
                     "timestamp": "${timestamp}"
                 },
                 "$size": 1
             }
         }],
         "subject":[{
-            "id": "${tag.requestMethod}:${tags.requestName}",
-            "name": "${tag.requestMethod}: ${tags.requestName}"
+            "id": "${tags.requestMethod}:${tags.requestName}",
+            "name": "${tags.requestMethod}: ${tags.requestName}"
         }],
         "label": "Node.js_Request_Slow",
         "evaluationPoint": "rte",
