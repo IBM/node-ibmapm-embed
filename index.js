@@ -92,14 +92,6 @@ commontools.enableTrace(appmetrics);
 var restClient = require('ibmapm-restclient');
 restClient.checkReadyStatus(startDC);
 
-logger.debug('== Data Collector version:', global.DC_VERSION);
-logger.debug('== Capabilities:');
-logger.debug('   |== Metrics:', 'Enabled');
-logger.debug('   |== Diagnostic:', 'Disabled');
-logger.debug('   |== Transaction Tracking:', 'Disabled');
-logger.debug('== Supported Integrations:', 'IBM Cloud Application Management,',
-    'IBM Cloud Application Performance Management');
-
 
 var DCStarted = false;
 
@@ -114,6 +106,14 @@ function startDC() {
 
     var plugin = require('./lib/plugin.js').monitoringPlugin;
     plugin.init('Cloudnative');
+
+    logger.info('== Data Collector version:', global.DC_VERSION);
+    logger.info('== Capabilities:');
+    logger.info('   |== Metrics:', 'Enabled');
+    logger.info('   |== Diagnostic:', commontools.testTrue(process.env.KNJ_ENABLE_DEEPDIVE) ? 'Enabled' : 'Disabled');
+    logger.info('   |== Transaction Tracking:', commontools.testTrue(process.env.KNJ_ENABLE_TT) ? 'Enabled' : 'Disabled');
+    logger.info('== Supported Integrations:', 'IBM Cloud Application Management,',
+        'IBM Cloud Application Performance Management');
 
 }
 

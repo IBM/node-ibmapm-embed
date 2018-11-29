@@ -23,11 +23,8 @@ The Node.js data collector helps you to manage the performance and availability 
 
 This data collector can be configured to connect to the Winterfell server, the IBM Cloud Application Performance Management (Cloud APM v8) server, or the IBM Cloud Availability Monitoring (BAM) server.
 
-## Downloading the latest ibmapm package
-To get the up-to-date ibmapm package, which is a required dependency that you need for Node.js application monitoring, go to https://rtpgsa.ibm.com/projects/i/itm_db2_agent/nodejs/cloudnative/NPMCD/latest/.
-
-This package is for internal testing.
-
+## The latest ibmapm-embed package
+The Node.js data collector is published to npm already. You can find it in [ibmapm-embed](https://www.npmjs.com/package/ibmapm-embed).
 
 ## Configuring the Node.js application monitoring using the Winterfell server
 When the data collector is configured to connect to the Winterfell server, you can use it to monitor both the Node.js applications in IBM Cloud Private and on-premises Liberty applications.
