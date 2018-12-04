@@ -43,5 +43,5 @@ export KNJ_RESTCLIENT_MAX_RETRY=2
 |KNJ_ENABLE_METHODTRACE (optional)  |"true", "True", "", "False" or not set |not set        |Enables or disables Method Trace. By default, method trace is diabled.|
 |KNJ_ENABLE_PROFILING (optional)    |"true", "True", "", "False" or not set |not set        |Enables or disables method profiling. By default, method profiling is disabled.|
 |KNJ_RESTCLIENT_TIMER (optional)   |"1000", "100"                          |"1000"         |Interval at which requests are sent to the sever, in milliseconds.|
-|KNJ_RESTCLIENT_MAX_RETRY(optional)|"3", "2"                               |"3"            |Specifies the retry times when a reqeust fails.                |  
+|KNJ_RESTCLIENT_MAX_RETRY(optional)|"3", "2"                               |"3"            |Specifies the retry times when a request fails.                |  
 
