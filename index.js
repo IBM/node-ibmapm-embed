@@ -42,8 +42,10 @@ if (loglevel &&
     (loglevel === 'OFF' || loglevel === 'ERROR' || loglevel === 'INFO' ||
         loglevel === 'DEBUG' || loglevel === 'ALL')) {
     logger.setLevel(loglevel);
+    process.env.KNJ_LOG_LEVEL = loglevel;
 } else {
     logger.setLevel('INFO');
+    process.env.KNJ_LOG_LEVEL = 'INFO';
 }
 var commontools = require('./lib/tool/common');
 
