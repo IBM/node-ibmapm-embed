@@ -2,7 +2,7 @@
 You can configure the Node.js data collector to monitor applications in IBM Cloud Private and connect to the Cloud APM v8 server.
 
 ## Prerequisites
-- The following information about the Cloud APM v8 server is required during data colletor configuration:
+- The following information about the Cloud APM v8 server is required during data collector configuration:
 > - The URL of the target Cloud APM v8 server
 > - The location of the key file, either a URL to download the key file or a local file directory (required only by secure HTTPS connection)
 > - The key file password that is paired with the key file (required only by secure HTTPS connection)
