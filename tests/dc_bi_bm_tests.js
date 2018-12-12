@@ -59,8 +59,6 @@ process.env.VCAP_SERVICES = JSON.stringify({
         ]
     }]
 });
-require('appmetrics');
-global.NodeDCLoaded = false;
 var dc = require('../index');
 
 var bamplugin = require('../node_modules/ibmapm-restclient/lib/plugins/BAMPlugin');
