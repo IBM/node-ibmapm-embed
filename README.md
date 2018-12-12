@@ -31,32 +31,32 @@ When the data collector is configured to connect to the Cloud App Management ser
 
 ### Monitoring Node.js applications in IBM Cloud Private
 
-To monitor a Node.js applications running as a container in IBM Cloud Private, follow the instructions as documented in [Configuring the data collector for applications in IBM Cloud Private](ibmapm/readme-topics/nodejsdc_config_winterfell_container.md)
+To monitor a Node.js applications running as a container in IBM Cloud Private, follow the instructions as documented in [Configuring the data collector for applications in IBM Cloud Private](readme-topics/nodejsdc_config_winterfell_container.md)
 
 ### Monitoring Microclimate based Node.js applications in IBM Cloud Private
 
-To monitor a Node.js applications which created by Microclimate running as a container in IBM Cloud Private, follow the instructions as documented in [Configuring the data collector for Microclimate based applications in IBM Cloud Private](ibmapm/readme-topics/nodejsdc_config_winterfell_container_microclimate.md)
+To monitor a Node.js applications which created by Microclimate running as a container in IBM Cloud Private, follow the instructions as documented in [Configuring the data collector for Microclimate based applications in IBM Cloud Private](readme-topics/nodejsdc_config_winterfell_container_microclimate.md)
 
 ### Monitoring on-premises Node.js applications
-To monitor on-premises Node.js applications, follow the instructions as documented in [Configuring on-premises Node.js applications monitoring using the Cloud App Management server](ibmapm/readme-topics/nodejsdc_config_winterfell_onpremise.md).
+To monitor on-premises Node.js applications, follow the instructions as documented in [Configuring on-premises Node.js applications monitoring using the Cloud App Management server](readme-topics/nodejsdc_config_winterfell_onpremise.md).
 
-You can also use the supported variables to change the default behavior of data collection. For more information, see [Advanced configuration](ibmapm/readme-topics/nodejs_dc_advanced_config.md).
+You can also use the supported variables to change the default behavior of data collection. For more information, see [Advanced configuration](readme-topics/nodejs_dc_advanced_config.md).
 
 ### Disabling the Node.js data collector
-To disable the Node.js data collector, roll back the changes that you have made to your application and then update the application deployment. For more information, see [Disabling the Node.js data collector](ibmapm/readme-topics/nodejs_dc_unconfig.md).
+To disable the Node.js data collector, roll back the changes that you have made to your application and then update the application deployment. For more information, see [Disabling the Node.js data collector](readme-topics/nodejs_dc_unconfig.md).
 
 ## Configuring Node.js application monitoring using the Cloud APM v8 server
 You can configure the Node.js data collector using the Cloud APM v8 server to monitor your Node.js applications running locally or in IBM Cloud Private.
 
 ### Prerequisites
-Before configure the Node.js DC to connect to the Cloud APM v8 server, you need to get the configuration information from APM server first, see [Get the APM configuration information](ibmapm/readme-topics/nodejs_dc_apm_configure.md).
+Before configure the Node.js DC to connect to the Cloud APM v8 server, you need to get the configuration information from APM server first, see [Get the APM configuration information](readme-topics/nodejs_dc_apm_configure.md).
 
 - If you are a Cloud APM, Private (on-premises) user, complete the following procedures:
-> - [Configuring the data collector for local applications](ibmapm/readme-topics/nodejsdc_config_apm_onpremise.md)
-> - [Configuring the data collector for applications in IBM Cloud Private](ibmapm/readme-topics/nodejsdc_config_apm_icp.md)
-> - [Configuring method trace and transaction tracking](ibmapm/readme-topics/nodejsdc_mt_tt.md)
+> - [Configuring the data collector for local applications](readme-topics/nodejsdc_config_apm_onpremise.md)
+> - [Configuring the data collector for applications in IBM Cloud Private](readme-topics/nodejsdc_config_apm_icp.md)
+> - [Configuring method trace and transaction tracking](readme-topics/nodejsdc_mt_tt.md)
 
-You can also use the supported variables to change the default behavior of data collection. For more information, see [Advanced configuration](ibmapm/readme-topics/nodejs_dc_advanced_config.md).
+You can also use the supported variables to change the default behavior of data collection. For more information, see [Advanced configuration](readme-topics/nodejs_dc_advanced_config.md).
 
 ## Troubleshooting
 Find below some possible problem scenarios and corresponding diagnostic steps. 
