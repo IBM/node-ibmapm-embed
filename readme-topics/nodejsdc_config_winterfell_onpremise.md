@@ -19,11 +19,11 @@ If your environment can access Internet:
 If your environment cannot access Internet:  
 1. Unpack greenfield package according to your Node.js Runtime version, e.g. with Node.js v8.x Runtime, You need to do the following steps:  
 ```
-tar xzf app_mgmt_data-collectors_2018.4.1.tar.gz
-cd app_mgmt_data-collectors_2018.4.1
-tar zxf app_mgmt_runtime_dc_2018.4.1.tar.gz
-cd app_mgmt_runtime_dc_2018.4.1
-tar zxf nodejs_datacollector_2018.4.1.tgz
+tar xzf app_mgmt_data-collectors_2019.1.0.tar.gz
+cd app_mgmt_data-collectors_2019.1.0
+tar zxf app_mgmt_runtime_dc_2019.1.0.tar.gz
+cd app_mgmt_runtime_dc_2019.1.0
+tar zxf nodejs_datacollector_2019.1.0.tgz
 tar zxf ibmapm-greenfield-v8-lx64.tgz
 ```
 2. Copy or move `ibmapm` folder you get from step 1 to the root folder of application (the folder that contains application entry file)

@@ -1,14 +1,14 @@
 {
     "name": "ibmapm-embed",
     "main": "./index.js",
-    "version": "1.0.44",
+    "version": "1.0.45",
     "readme": "Node.js Data Collector",
     "description": "Node.js data collector for IBM BAM",
     "dependencies": {
         "log4js": "^0.6.38",
         "properties": "^1.2.1",
         "uuid": "^2.0.2",
-        "ibmapm-restclient": "^1.0.0"
+        "ibmapm-restclient": "^1.1.0"
     },
     "devDependencies": {
         "chai": "^3.5.0",
@@ -23,8 +23,9 @@
         "coveralls": "^2.11.2",
         "intercept-stdout": "~0.1.2",
         "nyc": "^11.0.2",
-        "codecov": "2.x",
-        "tap": "7.x"
+        "tap": "12.x",
+        "tap-junit": "2.0.0",
+        "https-proxy-agent": "^2.2.1"
     },
     "scripts": {
         "pretest": "eslint .",
