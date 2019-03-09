@@ -24,7 +24,7 @@ If your service account does not have access to Kubernetes resources, follow the
 4. In the <b>Standard monitoring agents</b> section, go to the <b>Data Collectors</b> tile and click <b>Configure</b>.
 5. Click <b>Download file</b> to download the `ibm-cloud-apm-dc-configpack.tar` file.
 
-Extract the `ibm-cloud-apm-dc-configpack.tar` file to get the `global.environmen`t file and the `keyfiles`. This file contains all variables and their values required by data collectors for server connection.
+Extract the `ibm-cloud-apm-dc-configpack.tar` file to get the `global.environment` file and the `keyfiles`. This file contains all variables and their values required by data collectors for server connection.
 
 ### Install Data Collector
 
@@ -36,7 +36,7 @@ There are two options to configure the Node.js data collector to monitoring the 
 
 #### Option 1 (Passing ICAM server configuration via configMap - Preferred option)
 
-You can create a configMap for the file `global.environment` and `keyfile.p12` extracted from the ICAM configuration package, and mount this configMap when you deploy the application as a kubenetes deployment.
+You can create a configMap for the file `global.environment` and `keyfile.p12` extracted from the ICAM configuration package, and mount this configMap when you deploy the application as a kubernetes deployment.
 
 1. Create the Kubernetes ConfigMap:
     <pre>
