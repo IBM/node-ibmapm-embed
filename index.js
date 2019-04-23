@@ -20,6 +20,7 @@ if (!global.NodeDCLoaded) {
     return;
 }
 var appmetrics = global.Appmetrics;
+var url = require('url');
 
 function isTrue(v) {
     if (v && ['false', 'False', 'FALSE', ''].indexOf(v) < 0) {
@@ -28,6 +29,9 @@ function isTrue(v) {
         return false;
     }
 };
+function isFalse(v) {
+    return v && ['false', 'False', 'FALSE'].indexOf(v) === 0;
+}
 // initialize log
 if (isTrue(process.env.KNJ_LOG_TO_CONSOLE)) {
     log4js.loadAppender('console');
@@ -54,6 +58,9 @@ var commontools = require('./lib/tool/common');
 
 commontools.envDecrator();
 global.DC_VERSION = getDCVersion();
+var configObj;
+var opentracing_sampler = process.env['opentracing.sampler'] || 1.0;
+var opentracing_disabled = isFalse(process.env['opentracing.enabled']);
 
 process.env.MONITORING_SERVER_TYPE = 'BAM';
 
@@ -88,6 +95,7 @@ if (process.env.MONITORING_SERVER_TYPE === 'BAM') {
 // initialize BAM configuration end
 
 
+initJaegerSender();
 commontools.enableTrace(appmetrics);
 
 // Start DC in case rest client is ready to send payload
@@ -103,7 +111,7 @@ function startDC() {
         return;
     }
     DCStarted = true;
-
+    refreshJaegerSender();
     logger.debug('index.js', 'startDC()', 'start DC.');
 
     var plugin = require('./lib/plugin.js').monitoringPlugin;
@@ -113,7 +121,8 @@ function startDC() {
     logger.info('== Capabilities:');
     logger.info('   |== Metrics:', 'Enabled');
     logger.info('   |== Diagnostic:', commontools.testTrue(process.env.KNJ_ENABLE_DEEPDIVE) ? 'Enabled' : 'Disabled');
-    logger.info('   |== Transaction Tracking:', commontools.testTrue(process.env.KNJ_ENABLE_TT) ? 'Enabled' : 'Disabled');
+    logger.info('   |== Transaction Tracking:',
+        commontools.testTrue(process.env.KNJ_ENABLE_TT) ? 'Enabled' : 'Disabled');
     logger.info('== Supported Integrations:', 'IBM Cloud Application Management,',
         'IBM Cloud Application Performance Management');
 
@@ -142,4 +151,89 @@ function getDCVersion() {
         return packageJson.version;
     }
     return '1.0.0';
+};
+
+function initJaegerSender() {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    if (!opentracing_disabled) {
+        const zipkin = require('./appmetrics-zipkin/index.js');
+        const zipkinUrl = process.env.JAEGER_ENDPOINT_ZIPKIN ?
+            process.env.JAEGER_ENDPOINT_ZIPKIN : 'http://localhost:9411/api/v1/spans';
+        var jaegerEndpoint = url.parse(zipkinUrl);
+        var zipkinOptions;
+        if (jaegerEndpoint.protocol === 'https:'){
+            zipkinOptions = {
+                zipkinEndpoint: zipkinUrl,
+                sampleRate: opentracing_sampler,
+                pfx: global.JAEGER_PFX,
+                passphase: global.JAEGER_PASSPHASE
+            };
+            if (!zipkinOptions.pfx || !zipkinOptions.passphase) {
+                process.env.JAEGER_ENDPOINT_NOTREADY = 'true';
+            }
+        } else {
+            zipkinOptions = {
+                host: jaegerEndpoint.hostname,
+                port: jaegerEndpoint.port,
+                sampleRate: opentracing_sampler
+            };
+            if (!process.env.JAEGER_ENDPOINT_ZIPKIN) {
+                process.env.JAEGER_ENDPOINT_NOTREADY = 'true';
+            }
+        }
+        zipkin(zipkinOptions);
+        var internalUrls = [
+            '/applicationmgmt/0.9',
+            '/metric/1.0',
+            '/uielement/0.8',
+            '/agent_mgmt/0.6',
+            'configmaps',
+            '?type=providers',
+            '?type=aar/middleware',
+            '?type=adr/middleware',
+            '/1.0/monitoring/data',
+            '/OEReceiver/v1/monitoringdata/',
+            '/api/v1/spans'
+        ];
+        zipkin.updatePathFilter(internalUrls);
+        zipkin.updateHeaderFilter({
+            'User-Agent': 'NodeDC'
+        });
+
+    }
+}
+
+function refreshJaegerSender(){
+    logger.debug('refreshJaegerSender enter');
+    if (!opentracing_disabled) {
+        logger.debug('enter');
+        const zipkin = require('./appmetrics-zipkin/index.js');
+        const zipkinUrl = process.env.JAEGER_ENDPOINT_ZIPKIN ?
+            process.env.JAEGER_ENDPOINT_ZIPKIN : 'http://localhost:9411/api/v1/spans';
+        var jaegerEndpoint = url.parse(zipkinUrl);
+        logger.debug('jaeger', jaegerEndpoint.hostname, jaegerEndpoint.port, opentracing_sampler);
+        var zipkinOptions;
+        if (jaegerEndpoint.protocol === 'https:'){
+            zipkinOptions = {
+                zipkinEndpoint: zipkinUrl,
+                sampleRate: opentracing_sampler,
+                pfx: global.JAEGER_PFX,
+                passphase: global.JAEGER_PASSPHASE
+            };
+            if (zipkinOptions.pfx && zipkinOptions.passphase) {
+                process.env.JAEGER_ENDPOINT_NOTREADY = 'false';
+            }
+        } else {
+            zipkinOptions = {
+                host: jaegerEndpoint.hostname,
+                port: jaegerEndpoint.port,
+                sampleRate: opentracing_sampler
+            };
+            if (process.env.JAEGER_ENDPOINT_ZIPKIN) {
+                process.env.JAEGER_ENDPOINT_NOTREADY = 'false';
+            }
+        }
+        zipkin.update(zipkinOptions);
+        logger.debug('done', zipkinUrl, process.env.JAEGER_ENDPOINT_NOTREADY);
+    }
 };
