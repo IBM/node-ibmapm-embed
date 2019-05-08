@@ -162,7 +162,7 @@ HttpsProbeZipkin.prototype.attach = function(name, target) {
               traceUrl = traceUrl.substr(0, maxUrlLength);
             }
 
-            tracer.recordBinary('http.url', url_prefix + traceUrl);
+            tracer.recordBinary('http.url', urlPrefix + traceUrl);
             tracer.recordAnnotation(new Annotation.ServerRecv());
             logger.debug('https-tracer(before): ', tracer.id);
 
@@ -174,8 +174,8 @@ HttpsProbeZipkin.prototype.attach = function(name, target) {
               tracer.recordAnnotation(new Annotation.LocalAddr(0));
               var status_code = res.statusCode.toString();
               tracer.recordBinary('http.status_code', status_code);
-              if ( status_code >= 400 ) {
-                tracer.recordBinary('error', "true");
+              if (status_code >= 400) {
+                tracer.recordBinary('error', 'true');
               }
               tracer.recordBinary('http.method', reqMethod.toUpperCase());
               if (process.env.APM_TENANT_ID){

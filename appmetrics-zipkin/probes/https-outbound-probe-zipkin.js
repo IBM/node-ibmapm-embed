@@ -144,8 +144,8 @@ HttpsOutboundProbeZipkin.prototype.attach = function(name, target) {
             logger.debug('confirm:', urlRequested);
             var status_code = target.res.statusCode.toString();
             tracer.recordBinary('http.status_code', status_code);
-            if ( status_code >= 400 ) {
-              tracer.recordBinary('error', "true");
+            if (status_code >= 400) {
+              tracer.recordBinary('error', 'true');
             }
             tracer.recordAnnotation(new Annotation.ClientRecv());
             logger.debug('send https-outbound-tracer(aroundCallback): ', tracer.id);
