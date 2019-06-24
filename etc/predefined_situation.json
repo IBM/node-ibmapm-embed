@@ -88,14 +88,14 @@
                 "$items": {
                     "averageServiceResponseTime": "${metrics.averageServiceResponseTime}",
                     "requestName": "${tags.requestName}",
-                    "requestMethod": "${tags.requestMethod}",
+                    "requestType": "${tags.requestType}",
                     "timestamp": "${timestamp}"
                 },
                 "$size": 1
             }
         }],
         "subject":[{
-            "id": "${tags.requestMethod}:${tags.requestName}"
+            "id": "${tags.requestType}:${tags.requestName}"
         }],
         "label": "Node.js_Request_Slow",
         "description": "Node.js Request Slow",

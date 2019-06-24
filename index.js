@@ -3,6 +3,7 @@
 // Node module: ibmapm
 // This file is licensed under the Apache License 2.0.
 // License text available at https://opensource.org/licenses/Apache-2.0
+// PLACEHOLDER_FOR_BI_FIX
 if (process.env.NODEJS_DC_DISABLE && process.env.NODEJS_DC_DISABLE.toLowerCase() === 'true') {
     return;
 }
@@ -154,7 +155,6 @@ function getDCVersion() {
 };
 
 function initJaegerSender() {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     if (!opentracing_disabled) {
         const zipkin = require('./appmetrics-zipkin/index.js');
         const zipkinUrl = process.env.JAEGER_ENDPOINT_ZIPKIN ?
