@@ -193,7 +193,9 @@ function initJaegerSender() {
             '?type=adr/middleware',
             '/1.0/monitoring/data',
             '/OEReceiver/v1/monitoringdata/',
-            '/api/v1/spans'
+            '/api/v1/spans',
+            '/api/v1/namespaces',
+            '/apis/extensions/v1beta1/namespaces'
         ];
         zipkin.updatePathFilter(internalUrls);
         zipkin.updateHeaderFilter({
