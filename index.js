@@ -155,7 +155,7 @@ function getDCVersion() {
 };
 
 function initJaegerSender() {
-    if (!opentracing_disabled) {
+    if (!opentracing_disabled && process.env.JAEGER_ENDPOINT_ZIPKIN) {
         const zipkin = require('./appmetrics-zipkin/index.js');
         const zipkinUrl = process.env.JAEGER_ENDPOINT_ZIPKIN ?
             process.env.JAEGER_ENDPOINT_ZIPKIN : 'http://localhost:9411/api/v1/spans';
@@ -205,7 +205,7 @@ function initJaegerSender() {
 
 function refreshJaegerSender(){
     logger.debug('refreshJaegerSender enter');
-    if (!opentracing_disabled) {
+    if (!opentracing_disabled && process.env.JAEGER_ENDPOINT_ZIPKIN) {
         logger.debug('enter');
         const zipkin = require('./appmetrics-zipkin/index.js');
         const zipkinUrl = process.env.JAEGER_ENDPOINT_ZIPKIN ?
