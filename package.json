@@ -13,7 +13,7 @@
         "zipkin": "0.10.1",
         "zipkin-context-cls": "0.6.1",
         "zipkin-transport-http": "0.10.1",
-        "ibmapm-restclient": "^1.1.0"
+        "ibmapm-restclient": "^19.6.0"
     },
     "devDependencies": {
         "chai": "^3.5.0",
