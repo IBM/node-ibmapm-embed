@@ -31,7 +31,7 @@ function isTrue(v) {
     }
 };
 function isFalse(v) {
-    return v && ['false', 'False', 'FALSE'].indexOf(v) === 0;
+    return !v || ['false', 'False', 'FALSE'].indexOf(v) === 0;
 }
 // initialize log
 if (isTrue(process.env.KNJ_LOG_TO_CONSOLE)) {
@@ -155,7 +155,7 @@ function getDCVersion() {
 };
 
 function initJaegerSender() {
-    if (!opentracing_disabled && process.env.JAEGER_ENDPOINT_ZIPKIN) {
+    if (!opentracing_disabled) {
         const zipkin = require('./appmetrics-zipkin/index.js');
         const zipkinUrl = process.env.JAEGER_ENDPOINT_ZIPKIN ?
             process.env.JAEGER_ENDPOINT_ZIPKIN : 'http://localhost:9411/api/v1/spans';
