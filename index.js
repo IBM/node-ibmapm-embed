@@ -84,7 +84,7 @@ commontools.envDecrator();
 global.DC_VERSION = getDCVersion();
 var configObj;
 var opentracing_sampler = process.env['OPENTRACING_SAMPLER'] || 0.01;
-var opentracing_disabled = isFalse(process.env['OPENTRACING_ENABLED']);
+var opentracing_disabled = !process.env['OPENTRACING_ENABLED'] && isFalse(process.env['OPENTRACING_ENABLED']);
 
 process.env.MONITORING_SERVER_TYPE = 'BAM';
 
