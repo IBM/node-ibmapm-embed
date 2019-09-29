@@ -5,6 +5,8 @@ process.env.KNJ_LOG_LEVEL = 'all';
 process.env.KNJ_LOG_TO_CONSOLE = false;
 var tap = require('tap');
 var cryptoutil = require('../node_modules/ibmapm-restclient/lib/plugins/cryptoutil');
+var log4js = require('log4js');
+global.knj_logger = log4js.getLogger('knj_log');
 
 tap.plan(1);
 tap.tearDown(function() {

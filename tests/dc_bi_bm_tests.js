@@ -59,6 +59,8 @@ process.env.VCAP_SERVICES = JSON.stringify({
         ]
     }]
 });
+var log4js = require('log4js');
+global.knj_logger = log4js.getLogger('knj_log');
 var dc = require('../index');
 
 var bamplugin = require('../node_modules/ibmapm-restclient/lib/plugins/BAMPlugin');

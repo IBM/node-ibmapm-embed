@@ -13,6 +13,8 @@ process.env.IBM_APM_SERVER_URL =
     'aHR0cDovL2ZvcnRhcHRlc3Rvbmx5Lmlnbm9yZQ==';
 process.env.MONITORING_SERVER_TYPE = 'BI';
 process.env.KNJ_FILE_COMMIT_TIME = 1;
+var log4js = require('log4js');
+global.knj_logger = log4js.getLogger('knj_log');
 var tap = require('tap');
 var jso = require('../lib/jso');
 var config = require('../lib/config.js');

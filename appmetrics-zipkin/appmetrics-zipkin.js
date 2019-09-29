@@ -65,22 +65,6 @@ function start(options) {
 
   global.KNJ_TT_MAX_LENGTH = global.KNJ_TT_MAX_LENGTH || 128;
 
-  if (options) {
-    host = options['host'];
-    port = options['port'];
-    if (options.zipkinEndpoint){
-      zipkin_endpoint = options.zipkinEndpoint;
-    }
-    if (options.pfx){
-      pfx = options.pfx;
-    }
-    if (options.passphase){
-      passphase = options.passphase;
-    }
-    serviceName = options['serviceName'];
-    sampleRate = options['sampleRate'];
-  }
-
   // Uses properties from file if present
   if (properties){
     if (properties.get('host')) {
@@ -95,6 +79,22 @@ function start(options) {
     if (properties.get('sampleRate')) {
       sampleRate = properties.get('sampleRate');
     }
+  }
+
+  if (options) {
+    host = options['host'];
+    port = options['port'];
+    if (options.zipkinEndpoint){
+      zipkin_endpoint = options.zipkinEndpoint;
+    }
+    if (options.pfx){
+      pfx = options.pfx;
+    }
+    if (options.passphase){
+      passphase = options.passphase;
+    }
+    serviceName = options['serviceName'];
+    sampleRate = options['sampleRate'];
   }
 
   if (!serviceName) {
@@ -197,6 +197,12 @@ module.exports.stop = function(){
 module.exports.disable = function(){
   probes.forEach(function(probe) {
     probe.disable();
+    //    probe.enableRequests();
+  });
+};
+module.exports.enable = function(){
+  probes.forEach(function(probe) {
+    probe.enable();
     //    probe.enableRequests();
   });
 };

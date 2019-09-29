@@ -3,6 +3,8 @@ process.env.DC_TEST_MODE = true;
 process.env.MONITORING_SERVER_TYPE = 'BAM';
 process.env.KNJ_LOG_LEVEL = 'all';
 process.env.KNJ_LOG_TO_CONSOLE = true;
+var log4js = require('log4js');
+global.knj_logger = log4js.getLogger('knj_log');
 var tap = require('tap');
 var k8sutil = require('../node_modules/ibmapm-restclient/lib/tools/k8sutil');
 

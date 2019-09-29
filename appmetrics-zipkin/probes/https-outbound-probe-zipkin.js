@@ -22,9 +22,7 @@ var tool = require('../lib/tools.js');
 var util = require('util');
 var url = require('url');
 var semver = require('semver');
-const zipkin = require('zipkin');
-var log4js = require('log4js');
-var logger = log4js.getLogger('knj_log');
+var logger = global.knj_logger;
 
 var serviceName;
 var ibmapmContext;
@@ -34,11 +32,10 @@ var tracer;
 
 const {
   Request,
+  HttpHeaders: Header,
   Annotation
 } = require('zipkin');
 
-const CLSContext = require('zipkin-context-cls');
-const ctxImpl = new CLSContext();
 
 var methods;
 // In Node.js < v8.0.0 'get' calls 'request' so we only instrument 'request'
@@ -61,34 +58,25 @@ HttpsOutboundProbeZipkin.prototype.updateProbes = function() {
   ibmapmContext = this.ibmapmContext;
   headerFilters = this.headerFilters;
   pathFilters = this.pathFilters;
-  tracer = new zipkin.Tracer({
-    ctxImpl,
-    recorder: this.recorder,
-    sampler: new zipkin.sampler.CountingSampler(this.config.sampleRate),
-        // sample rate 0.01 will sample 1 % of all incoming requests
-    traceId128Bit: true // to generate 128-bit trace IDs.
-  });
+  tracer = this.tracer;
 };
 
 HttpsOutboundProbeZipkin.prototype.attach = function(name, target) {
-  tracer = new zipkin.Tracer({
-    ctxImpl,
-    recorder: this.recorder,
-    sampler: new zipkin.sampler.CountingSampler(this.config.sampleRate),
-        // sample rate 0.01 will sample 1 % of all incoming requests
-    traceId128Bit: true // to generate 128-bit trace IDs.
-  });
+  tracer = this.tracer;
   serviceName = this.serviceName;
-  if (name === 'https') {
-    if (target.__zipkinOutboundProbeAttached__) return target;
+  var that = this;
+  var passdown_urlRequested = '';
+  var passdown_childId = '';
+  var passdown_sampled = true;
+  if (name === 'https' && !target.__zipkinOutboundProbeAttached__) {
     target.__zipkinOutboundProbeAttached__ = true;
     aspect.around(
       target,
       methods,
       // Before 'http.request' function
       function(obj, methodName, methodArgs, probeData) {
-        // Get HTTP request method from options
-        if (process.env.JAEGER_ENDPOINT_NOTREADY === 'true'){
+        [passdown_urlRequested, passdown_childId, passdown_sampled] = that.opentracingProbeStart(methodArgs);
+        if (passdown_childId === 0 && passdown_urlRequested === 0) {
           return;
         }
         var options = methodArgs[0];
@@ -140,15 +128,7 @@ HttpsOutboundProbeZipkin.prototype.attach = function(name, target) {
           methodArgs,
           probeData,
           function(target, args, probeData) {
-            tracer.setId(childId);
-            logger.debug('confirm:', urlRequested);
-            var status_code = target.res.statusCode.toString();
-            tracer.recordBinary('http.status_code', status_code);
-            if (status_code >= 400) {
-              tracer.recordBinary('error', 'true');
-            }
-            tracer.recordAnnotation(new Annotation.ClientRecv());
-            logger.debug('send https-outbound-tracer(aroundCallback): ', tracer.id);
+            that.opentracingProbeEnd(target, passdown_childId, passdown_urlRequested, passdown_sampled, 'aroundCallback');
           },
           function(target, args, probeData, ret) {
             return ret;
@@ -158,11 +138,87 @@ HttpsOutboundProbeZipkin.prototype.attach = function(name, target) {
       // After 'http.request' function returns
       function(target, methodName, methodArgs, probeData, rc) {
         // If no callback has been used then end the metrics after returning from the method instead
+        // if (passdown_childId === 0 && passdown_urlRequested === 0) {
+        //   return rc;
+        // }
+        // if (aspect.findCallbackArg(methodArgs) === undefined) {
+        //   that.opentracingProbeEnd(target, passdown_childId, passdown_urlRequested, passdown_sampled, 'after');
+        // }
         return rc;
       }
     );
   }
   return target;
+};
+
+HttpsOutboundProbeZipkin.prototype.opentracingStart = function(methodArgs) {
+  // Get HTTPS request method from options
+  var options = methodArgs[0];
+  var requestMethod = 'GET';
+  var urlRequested = '';
+  var sampled = true;
+  if (typeof options === 'object') {
+    if (tool.isIcamInternalRequest(options, headerFilters, pathFilters)){
+      return [0, 0];
+    }
+    urlRequested = formatURL(options);
+    if (options.method) {
+      requestMethod = options.method;
+    }
+  } else if (typeof options === 'string') {
+    urlRequested = options;
+    var parsedOptions = url.parse(options);
+    if (parsedOptions.method) {
+      requestMethod = parsedOptions.method;
+    }
+
+    // This converts the outgoing request's options to an object
+    // so that we can add headers onto it
+    methodArgs[0] = Object.assign({}, parsedOptions);
+  }
+
+  if (!methodArgs[0].headers) methodArgs[0].headers = {};
+  var childId = tracer.createChildId();
+  let { headers } = Request.addZipkinHeaders(methodArgs[0], childId);
+  Object.assign(methodArgs[0].headers, headers);
+  tracer.setId(childId);
+
+  if (urlRequested.length > global.KNJ_TT_MAX_LENGTH) {
+    urlRequested = urlRequested.substr(0, global.KNJ_TT_MAX_LENGTH);
+  }
+  sampled = (methodArgs[0].headers[(Header.Sampled)] || methodArgs[0].headers[(Header.Sampled).toLowerCase()]) === '1';
+
+  if (sampled) {
+    tracer.recordServiceName(serviceName);
+    tracer.recordRpc(urlRequested);
+    tracer.recordBinary('http.url', urlRequested);
+    tracer.recordBinary('http.method', requestMethod.toUpperCase());
+    if (process.env.APM_TENANT_ID){
+      tracer.recordBinary('tenant.id', process.env.APM_TENANT_ID);
+    }
+    tracer.recordBinary('edge.request', 'false');
+    tracer.recordBinary('request.type', 'https');
+    tool.recordIbmapmContext(tracer, ibmapmContext);
+    tracer.recordAnnotation(new Annotation.ClientSend());
+  }
+  logger.debug('send https-outbound-tracer(before): ', tracer.id, sampled, urlRequested);
+  return [urlRequested, childId, sampled];
+};
+
+HttpsOutboundProbeZipkin.prototype.opentracingEnd = function(target, childId, urlRequested, sampled, whichOne) {
+  tracer.setId(childId);
+  if (sampled) {
+    logger.debug('confirm:', urlRequested);
+    if (target.res) {
+      var status_code = target.res.statusCode.toString();
+      tracer.recordBinary('http.status_code', status_code);
+      if (status_code >= 400) {
+        tracer.recordBinary('error', 'true');
+      }
+    }
+    tracer.recordAnnotation(new Annotation.ClientRecv());
+  }
+  logger.debug('send https-outbound-tracer(' + whichOne + '): ', tracer.id, sampled, urlRequested);
 };
 
 // Get a URL as a string from the options object passed to http.get or http.request

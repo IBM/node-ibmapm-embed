@@ -4,6 +4,8 @@ process.env.MONITORING_SERVER_TYPE = 'BAM';
 process.env.KNJ_LOG_LEVEL = 'all';
 process.env.KNJ_LOG_TO_CONSOLE = true;
 process.env.KNJ_RESTCLIENT_MAX_RETRY = 0;
+var log4js = require('log4js');
+global.knj_logger = log4js.getLogger('knj_log');
 var tap = require('tap');
 var aarTools = require('../lib/tool/aartools');
 

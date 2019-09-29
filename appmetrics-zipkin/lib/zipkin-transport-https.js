@@ -7,8 +7,7 @@ var https = require('https');
 var url = require('url');
 var commonTools = require('../../lib/tool/common.js');
 
-var log4js = require('log4js');
-var logger = log4js.getLogger('knj_log');
+var logger = global.knj_logger;
 var _createClass = function() { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function(Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -80,6 +79,10 @@ var HttpsLogger = function() {
         commonTools.tlsFix8(finalOptions);
         try {
           var req = https.request(finalOptions, function(res){
+            if (!res) {
+              logger.debug('Send to Jaeger server, status unknown');
+              return;
+            }
             if (res.statusCode === 202)
               logger.debug('Send to Jaeger server successfully: ', postBody);
             else

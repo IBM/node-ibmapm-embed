@@ -31,27 +31,50 @@ function isTrue(v) {
     }
 };
 function isFalse(v) {
-    return !v || ['false', 'False', 'FALSE'].indexOf(v) === 0;
-}
-// initialize log
-if (isTrue(process.env.KNJ_LOG_TO_CONSOLE)) {
-    log4js.loadAppender('console');
-} else {
-    log4js.loadAppender('file');
-    log4js.addAppender(log4js.appenders.file('nodejs_dc.log'), 'knj_log');
+    return v && ['false', 'False', 'FALSE'].indexOf(v) === 0;
 }
 
-var logger = log4js.getLogger('knj_log');
+//    initialize log
+global.KNJ_MAX_LOG_SIZE = 10485760;
+var log4jsConfiguration = {
+    appenders: {
+        knj_log_console: {type: 'console'},
+        knj_log_file: {
+            type: 'multiFile',
+            maxLogSize: global.KNJ_MAX_LOG_SIZE,
+            base: '.',
+            property: 'fileName',
+            extension: '.log'
+        }
+    },
+    categories: {
+        default: {
+            appenders: [
+                isTrue(process.env.KNJ_LOG_TO_CONSOLE) ? 'knj_log_console' : 'knj_log_file'
+            ],
+            level: 'INFO'
+        }
+    }
+};
+
 var loglevel = process.env.KNJ_LOG_LEVEL ? process.env.KNJ_LOG_LEVEL.toUpperCase() : undefined;
+var logger;
 if (loglevel &&
     (loglevel === 'OFF' || loglevel === 'ERROR' || loglevel === 'INFO' ||
         loglevel === 'DEBUG' || loglevel === 'ALL')) {
-    logger.setLevel(loglevel);
+    log4jsConfiguration.categories.default.level = loglevel;
+    log4js.configure(log4jsConfiguration);
     process.env.KNJ_LOG_LEVEL = loglevel;
+    global.knj_logger = log4js.getLogger('knj_log');
+    logger = global.knj_logger;
 } else {
-    logger.setLevel('INFO');
+    log4jsConfiguration.categories.default.level = 'INFO';
+    log4js.configure(log4jsConfiguration);
+    global.knj_logger = log4js.getLogger('knj_log');
+    logger = global.knj_logger;
     process.env.KNJ_LOG_LEVEL = 'INFO';
 }
+logger.addContext('fileName', 'nodejs_dc');
 var commontools = require('./lib/tool/common');
 
 //    initialize log end
@@ -60,8 +83,8 @@ var commontools = require('./lib/tool/common');
 commontools.envDecrator();
 global.DC_VERSION = getDCVersion();
 var configObj;
-var opentracing_sampler = process.env['opentracing.sampler'] || 1.0;
-var opentracing_disabled = isFalse(process.env['opentracing.enabled']);
+var opentracing_sampler = process.env['OPENTRACING_SAMPLER'] || 0.01;
+var opentracing_disabled = isFalse(process.env['OPENTRACING_ENABLED']);
 
 process.env.MONITORING_SERVER_TYPE = 'BAM';
 
@@ -160,6 +183,7 @@ function initJaegerSender() {
         const zipkinUrl = process.env.JAEGER_ENDPOINT_ZIPKIN ?
             process.env.JAEGER_ENDPOINT_ZIPKIN : 'http://localhost:9411/api/v1/spans';
         var jaegerEndpoint = url.parse(zipkinUrl);
+        var enabled = true;
         var zipkinOptions;
         if (jaegerEndpoint.protocol === 'https:'){
             zipkinOptions = {
@@ -169,7 +193,7 @@ function initJaegerSender() {
                 passphase: global.JAEGER_PASSPHASE
             };
             if (!zipkinOptions.pfx || !zipkinOptions.passphase) {
-                process.env.JAEGER_ENDPOINT_NOTREADY = 'true';
+                enabled = false;
             }
         } else {
             zipkinOptions = {
@@ -178,7 +202,7 @@ function initJaegerSender() {
                 sampleRate: opentracing_sampler
             };
             if (!process.env.JAEGER_ENDPOINT_ZIPKIN) {
-                process.env.JAEGER_ENDPOINT_NOTREADY = 'true';
+                enabled = false;
             }
         }
         zipkin(zipkinOptions);
@@ -201,18 +225,26 @@ function initJaegerSender() {
         zipkin.updateHeaderFilter({
             'User-Agent': 'NodeDC'
         });
+        if (!enabled){
+            zipkin.disable();
+            process.env.JAEGER_ENDPOINT_NOTREADY = 'true';
+        } else {
+            zipkin.enable();
+            process.env.JAEGER_ENDPOINT_NOTREADY = 'false';
+        }
 
     }
 }
 
 function refreshJaegerSender(){
     logger.debug('refreshJaegerSender enter');
-    if (!opentracing_disabled && process.env.JAEGER_ENDPOINT_ZIPKIN) {
+    if (!opentracing_disabled) {
         logger.debug('enter');
         const zipkin = require('./appmetrics-zipkin/index.js');
         const zipkinUrl = process.env.JAEGER_ENDPOINT_ZIPKIN ?
             process.env.JAEGER_ENDPOINT_ZIPKIN : 'http://localhost:9411/api/v1/spans';
         var jaegerEndpoint = url.parse(zipkinUrl);
+        var enabled = false;
         logger.debug('jaeger', jaegerEndpoint.hostname, jaegerEndpoint.port, opentracing_sampler);
         var zipkinOptions;
         if (jaegerEndpoint.protocol === 'https:'){
@@ -223,7 +255,7 @@ function refreshJaegerSender(){
                 passphase: global.JAEGER_PASSPHASE
             };
             if (zipkinOptions.pfx && zipkinOptions.passphase) {
-                process.env.JAEGER_ENDPOINT_NOTREADY = 'false';
+                enabled = true;
             }
         } else {
             zipkinOptions = {
@@ -232,10 +264,17 @@ function refreshJaegerSender(){
                 sampleRate: opentracing_sampler
             };
             if (process.env.JAEGER_ENDPOINT_ZIPKIN) {
-                process.env.JAEGER_ENDPOINT_NOTREADY = 'false';
+                enabled = true;
             }
         }
         zipkin.update(zipkinOptions);
+        if (!enabled){
+            zipkin.disable();
+            process.env.JAEGER_ENDPOINT_NOTREADY = 'true';
+        } else {
+            zipkin.enable();
+            process.env.JAEGER_ENDPOINT_NOTREADY = 'false';
+        }
         logger.debug('done', zipkinUrl, process.env.JAEGER_ENDPOINT_NOTREADY);
     }
 };

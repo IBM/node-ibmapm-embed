@@ -1,4 +1,6 @@
 'use strict';
+var log4js = require('log4js');
+global.knj_logger = log4js.getLogger('knj_log');
 var tap = require('tap');
 process.env.APPLICATION_NAME = 'only_4_unittest';
 process.env.DC_TEST_MODE = true;

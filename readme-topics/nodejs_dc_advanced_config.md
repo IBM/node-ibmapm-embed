@@ -3,12 +3,14 @@ You can set the variables described in this section to change the default behavi
 
 
 * For IBM Cloud applications, set the following variables in the `manifest.yml` file or on the **Bluemix UI**.  
-* For on-premises applications, set the following variables as environment variables or in the `config.properties` file.  
+* For on-premises applications, set the following variables as environment variables file.  
 
 |Variable                | Importance                         | Default Value | Description                                               |
 |:---------------------------------|:--------------------------------------|:--------------|:-------------------------------------------------------|
 |KNJ_ENABLE_TT           |optional |False        |Enables or disables transaction tracking. By default, transaction tracking is **disabled**.
-|KNJ_DISABLE_METHODTRACE   |optional |False        |Enables or disables Method Trace. By default, method trace is **enabled**.|
+|KNJ_ENABLE_DEEPDIVE   |optional |False        |Enables or disables Diagnostic. By default, diagnostic is **disabled**.|
+|KNJ_ENABLE_METHODTRACE   |optional |False        |Enables or disables Method Trace. By default, method trace is **disabled**. Caution: please set opentracing.enabled='false' if you want to enable methodtrace, they have conflict.|
+|OPENTRACING_ENABLED   |optional |true        |Enables or disables Opentracing. By default, opentracing is **enabled**. Caution: please set opentracing.enabled='false' if you want to enable methodtrace, they have conflict. and opentracing is only for ICAM Server support|
 |KNJ_AAR_BATCH_FREQ            |optional |60        |Specifies the interval at which transaction tracking data is batched and sent to the server, in seconds. By default, transaction tracking data is batched and sent to the server **every minute**.
 |KNJ_AAR_BATCH_COUNT            |optional |100        |Specifies the maximum number of requests that transaction tracking data contains before the data is batched and sent to the server. By default, when a batch of transaction tracking data contains **100** requests, this batch of data is sent to the server.
 |KNJ_LOG_LEVEL            |optional |error        |Specifies the level of information that is printed in the log. Possible values are `off`, `error`, `info`, `debug`, `all`.
