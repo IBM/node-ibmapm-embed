@@ -97,17 +97,19 @@ HttpsProbeZipkin.prototype.attach = function(name, target) {
           var httpsReq = args[0];
           var res = args[1];
           // Filter out urls where filter.to is ''
-          var traceUrl = parse(httpsReq.url);
+          let traceUrl = parse(httpsReq.url);
 
-          var passdown_edgeRequest = false;
-          var passdown_reqMethod = 'GET';
-          var passdown_sampled = true;
+          let passdown_edgeRequest = false;
+          let passdown_reqMethod = 'GET';
+          let passdown_sampled = true;
+          let passdown_traceid;
 
           if (traceUrl !== '') {
-            [passdown_edgeRequest, passdown_reqMethod, traceUrl, passdown_sampled]
+            [passdown_edgeRequest, passdown_reqMethod, traceUrl, passdown_sampled, passdown_traceid]
               = that.opentracingProbeStart(args, probeData, httpsReq, traceUrl);
             aspect.after(res, 'end', probeData, function(obj, methodName, args, probeData, ret) {
-              that.opentracingProbeEnd(probeData, traceUrl, passdown_edgeRequest, passdown_reqMethod, passdown_sampled, res);
+              that.opentracingProbeEnd(probeData, traceUrl, passdown_edgeRequest,
+                  passdown_reqMethod, passdown_sampled, passdown_traceid, res);
             });
           }
         });
@@ -132,7 +134,8 @@ HttpsProbeZipkin.prototype.opentracingStart = function(methodArgs, probeData, ht
       const traceId = new Some(headers[(Header.TraceId).toLowerCase()] || headers[(Header.TraceId)]);
       const parentSpanId = new Some(headers[(Header.ParentSpanId).toLowerCase()] || headers[(Header.ParentSpanId)]);
       const sampled = new Some(headers[(Header.Sampled).toLowerCase()] || headers[(Header.Sampled)]);
-      const flags = (new Some(headers[(Header.Flags).toLowerCase()] || headers[(Header.Flags)])).flatMap(stringToIntOption).getOrElse(0);
+      const flags = (new Some(headers[(Header.Flags).toLowerCase()]
+        || headers[(Header.Flags)])).flatMap(stringToIntOption).getOrElse(0);
       var id = new TraceId({
         traceId: traceId,
         parentId: parentSpanId,
@@ -157,14 +160,9 @@ HttpsProbeZipkin.prototype.opentracingStart = function(methodArgs, probeData, ht
   traceInfo[tracer.id._spanId] = 'start';
   sampled = (methodArgs[0].headers[(Header.Sampled)] || methodArgs[0].headers[(Header.Sampled).toLowerCase()]) === '1';
   var urlPrefix = 'https://' + httpsReq.headers.host;
-  var maxUrlLength = global.KNJ_TT_MAX_LENGTH;
-  if (urlPrefix.length < global.KNJ_TT_MAX_LENGTH) {
-    maxUrlLength = global.KNJ_TT_MAX_LENGTH - urlPrefix.length;
-  } else {
-    maxUrlLength = 1;
-  }
-  if (traceUrl.length > maxUrlLength) {
-    traceUrl = traceUrl.substr(0, maxUrlLength);
+
+  if (traceUrl.length > global.KNJ_TT_MAX_LENGTH) {
+    traceUrl = traceUrl.substr(0, global.KNJ_TT_MAX_LENGTH);
   }
 
   if (sampled){
@@ -172,16 +170,17 @@ HttpsProbeZipkin.prototype.opentracingStart = function(methodArgs, probeData, ht
     tracer.recordAnnotation(new Annotation.ServerRecv());
   }
   logger.debug('https-tracer(before): ', tracer.id, sampled, traceUrl);
-  return [edgeRequest, reqMethod, traceUrl, sampled];
+  return [edgeRequest, reqMethod, traceUrl, sampled, tracer.id];
 };
 
-HttpsProbeZipkin.prototype.opentracingEnd = function(probeData, traceUrl, edgeRequest, reqMethod, sampled, res){
-  if (traceInfo[probeData.traceId._spanId] === 'start'){
-    delete traceInfo[probeData.traceId._spanId];
+HttpsProbeZipkin.prototype.opentracingEnd = function(probeData, traceUrl, edgeRequest, reqMethod,
+    sampled, traceId, res){
+  if (traceId && traceInfo[traceId._spanId] === 'start'){
+    delete traceInfo[traceId._spanId];
   } else {
     return;
   }
-  tracer.setId(probeData.traceId);
+  tracer.setId(traceId);
   if (sampled){
     tracer.recordServiceName(serviceName);
     tracer.recordBinary('service.name', serviceName);

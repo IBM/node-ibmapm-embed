@@ -1,7 +1,7 @@
 {
     "name": "ibmapm-embed",
     "main": "./index.js",
-    "version": "19.9.1",
+    "version": "19.12.0",
     "readme": "Node.js Data Collector",
     "description": "Node.js data collector for IBM BAM",
     "dependencies": {
@@ -13,11 +13,11 @@
         "zipkin": "0.10.1",
         "zipkin-context-cls": "0.6.1",
         "zipkin-transport-http": "0.10.1",
-        "ibmapm-restclient": "^19.9.0"
+        "ibmapm-restclient": "^19.12.0"
     },
     "devDependencies": {
         "chai": "^3.5.0",
-        "eslint": "^3.19.0",
+        "eslint": "^6.5.1",
         "eslint-config-strongloop": "^2.1.0",
         "should": "^9.0.0",
         "should-http": "0.0.4",

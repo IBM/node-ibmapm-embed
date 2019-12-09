@@ -29,6 +29,7 @@ var ibmapmContext;
 var headerFilters;
 var pathFilters;
 var tracer;
+var traceInfo = {};
 
 const {
   Request,
@@ -65,9 +66,10 @@ HttpsOutboundProbeZipkin.prototype.attach = function(name, target) {
   tracer = this.tracer;
   serviceName = this.serviceName;
   var that = this;
-  var passdown_urlRequested = '';
-  var passdown_childId = '';
-  var passdown_sampled = true;
+  let passdown_urlRequested = '';
+  let passdown_childId = '';
+  let passdown_sampled = true;
+
   if (name === 'https' && !target.__zipkinOutboundProbeAttached__) {
     target.__zipkinOutboundProbeAttached__ = true;
     aspect.around(
@@ -79,56 +81,12 @@ HttpsOutboundProbeZipkin.prototype.attach = function(name, target) {
         if (passdown_childId === 0 && passdown_urlRequested === 0) {
           return;
         }
-        var options = methodArgs[0];
-        var requestMethod = 'GET';
-        var urlRequested = '';
-        if (typeof options === 'object') {
-          if (tool.isIcamInternalRequest(options, headerFilters, pathFilters)){
-            return;
-          }
-          urlRequested = formatURL(options);
-          if (options.method) {
-            requestMethod = options.method;
-          }
-        } else if (typeof options === 'string') {
-          urlRequested = options;
-          var parsedOptions = url.parse(options);
-          if (parsedOptions.method) {
-            requestMethod = parsedOptions.method;
-          }
-
-          // This converts the outgoing request's options to an object
-          // so that we can add headers onto it
-          methodArgs[0] = Object.assign({}, parsedOptions);
-        }
-
-        if (!methodArgs[0].headers) methodArgs[0].headers = {};
-        var childId = tracer.createChildId();
-        let { headers } = Request.addZipkinHeaders(methodArgs[0], childId);
-        Object.assign(methodArgs[0].headers, { headers });
-        tracer.setId(childId);
-
-        if (urlRequested.length > global.KNJ_TT_MAX_LENGTH) {
-          urlRequested = urlRequested.substr(0, global.KNJ_TT_MAX_LENGTH);
-        }
-        tracer.recordServiceName(serviceName);
-        tracer.recordRpc(urlRequested);
-        tracer.recordBinary('http.url', urlRequested);
-        tracer.recordBinary('http.method', requestMethod.toUpperCase());
-        if (process.env.APM_TENANT_ID){
-          tracer.recordBinary('tenant.id', process.env.APM_TENANT_ID);
-        }
-        tracer.recordBinary('edge.request', 'false');
-        tracer.recordBinary('request.type', 'https');
-        tool.recordIbmapmContext(tracer, ibmapmContext);
-        tracer.recordAnnotation(new Annotation.ClientSend());
-        logger.debug('send https-outbound-tracer(before): ', tracer.id);
-        // End metrics
         aspect.aroundCallback(
           methodArgs,
           probeData,
           function(target, args, probeData) {
-            that.opentracingProbeEnd(target, passdown_childId, passdown_urlRequested, passdown_sampled, 'aroundCallback');
+            that.opentracingProbeEnd(target, passdown_childId,
+                passdown_urlRequested, passdown_sampled, 'aroundCallback');
           },
           function(target, args, probeData, ret) {
             return ret;
@@ -138,18 +96,19 @@ HttpsOutboundProbeZipkin.prototype.attach = function(name, target) {
       // After 'http.request' function returns
       function(target, methodName, methodArgs, probeData, rc) {
         // If no callback has been used then end the metrics after returning from the method instead
-        // if (passdown_childId === 0 && passdown_urlRequested === 0) {
-        //   return rc;
-        // }
-        // if (aspect.findCallbackArg(methodArgs) === undefined) {
-        //   that.opentracingProbeEnd(target, passdown_childId, passdown_urlRequested, passdown_sampled, 'after');
-        // }
+        if (passdown_childId === 0 && passdown_urlRequested === 0) {
+          return rc;
+        }
+        if (aspect.findCallbackArg(methodArgs) === undefined) {
+          that.opentracingProbeEnd(target, passdown_childId, passdown_urlRequested, passdown_sampled, 'after');
+        }
         return rc;
       }
     );
   }
   return target;
 };
+
 
 HttpsOutboundProbeZipkin.prototype.opentracingStart = function(methodArgs) {
   // Get HTTPS request method from options
@@ -186,6 +145,9 @@ HttpsOutboundProbeZipkin.prototype.opentracingStart = function(methodArgs) {
   if (urlRequested.length > global.KNJ_TT_MAX_LENGTH) {
     urlRequested = urlRequested.substr(0, global.KNJ_TT_MAX_LENGTH);
   }
+
+  traceInfo[tracer.id._spanId] = 'start';
+
   sampled = (methodArgs[0].headers[(Header.Sampled)] || methodArgs[0].headers[(Header.Sampled).toLowerCase()]) === '1';
 
   if (sampled) {
@@ -206,6 +168,12 @@ HttpsOutboundProbeZipkin.prototype.opentracingStart = function(methodArgs) {
 };
 
 HttpsOutboundProbeZipkin.prototype.opentracingEnd = function(target, childId, urlRequested, sampled, whichOne) {
+  if (traceInfo[childId._spanId] === 'start'){
+    delete traceInfo[childId._spanId];
+  } else {
+    return;
+  }
+
   tracer.setId(childId);
   if (sampled) {
     logger.debug('confirm:', urlRequested);

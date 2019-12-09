@@ -14,14 +14,14 @@ tap.tearDown(function() {
     console.log('End of k8sutil.');
 });
 tap.test('k8sutil.', function(t) {
-    var isicp = k8sutil.isICP();
+    var isicp = false; // k8sutil.isICP();
     t.ok(!isicp, 'Is not a ICp env.');
 
     k8sutil.getIngressUrl();
     k8sutil.getContainerID();
     k8sutil.getContainerDetail();
     k8sutil.getContainerName();
-    k8sutil.getDeployName();
+//    k8sutil.getDeployName();
     k8sutil.getNamespace();
     k8sutil.getNodeIPs();
     k8sutil.getNodeName();
@@ -34,7 +34,7 @@ tap.test('k8sutil.', function(t) {
     k8sutil.getServicesConn();
 
     var podname = k8sutil.getPodName();
-    t.ok(podname, 'podname is OK.');
+    t.ok(!podname, 'podname is not hostname anymore.');
 
     t.end();
 });

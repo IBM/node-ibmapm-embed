@@ -23,10 +23,14 @@ var aspect = require('./lib/aspect.js');
 var fs = require('fs');
 var PropertyReader = require('properties-reader');
 var properties = PropertyReader(__dirname + '/appmetrics-zipkin.properties');
-var {Endpoint} = require('zipkin/lib/model');
+var {Endpoint, Span} = require('zipkin/lib/model');
 Endpoint.prototype.setServiceName = function setServiceName(serviceName) {
   // In zipkin, names are lowercase. This eagerly converts to alert users early.
   this.serviceName = serviceName || undefined;
+};
+Span.prototype.setName = function setName(name) {
+  // In zipkin, names are lowercase. This eagerly converts to alert users early.
+  this.name = name || undefined;
 };
 
 const {
@@ -98,7 +102,7 @@ function start(options) {
   }
 
   if (!serviceName) {
-    serviceName = processName;
+    serviceName = 'default'; // processName;
   }
   if (!host) {
     host = 'localhost';

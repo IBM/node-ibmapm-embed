@@ -93,6 +93,7 @@ Probe.prototype.metricsEnd = function(probeData) {
 Probe.prototype.metricsProbeStart = function(req, res, am) {};
 Probe.prototype.metricsProbeEnd = function(req, res, am) {};
 
+
 Probe.prototype.opentracingProbeStart = function(arg1) { return [0, 0, 0]; };
 Probe.prototype.opentracingProbeEnd = function(arg1, arg2, arg3) {};
 
@@ -104,6 +105,8 @@ Probe.prototype.enable = function() {
   if (_started) {
     this.metricsProbeStart = this.metricsStart;
     this.metricsProbeEnd = this.metricsEnd;
+    this.opentracingProbeStart = this.opentracingStart;
+    this.opentracingProbeEnd = this.opentracingEnd;
   }
 };
 
@@ -113,7 +116,6 @@ Probe.prototype.disable = function() {
   this.metricsProbeEnd = function() {};
   this.opentracingProbeStart = function(arg1) { return [0, 0, 0]; };
   this.opentracingProbeEnd = function(arg1, arg2, arg3) {};
-
 };
 
 Probe.prototype.start = function() {
@@ -121,6 +123,8 @@ Probe.prototype.start = function() {
   if (_enabled) {
     this.metricsProbeStart = this.metricsStart;
     this.metricsProbeEnd = this.metricsEnd;
+    this.opentracingProbeStart = this.opentracingStart;
+    this.opentracingProbeEnd = this.opentracingEnd;
   }
   this.tracer = new zipkin.Tracer({
     ctxImpl,
@@ -137,7 +141,6 @@ Probe.prototype.stop = function() {
   this.metricsProbeEnd = function() {};
   this.opentracingProbeStart = function(arg1) { return [0, 0, 0]; };
   this.opentracingProbeEnd = function(arg1, arg2, arg3) {};
-
 };
 
 Probe.prototype.fetchStack = function(thing) {

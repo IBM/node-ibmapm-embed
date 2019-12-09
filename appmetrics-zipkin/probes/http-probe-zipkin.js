@@ -94,19 +94,20 @@ HttpProbeZipkin.prototype.attach = function(name, target) {
           }
           var httpReq = args[0];
           var res = args[1];
-          var childId;
           // Filter out urls where filter.to is ''
-          var traceUrl = parse(httpReq.url);
+          let traceUrl = parse(httpReq.url);
 
-          var passdown_edgeRequest = false;
-          var passdown_reqMethod = 'GET';
-          var passdown_sampled = true;
+          let passdown_edgeRequest = false;
+          let passdown_reqMethod = 'GET';
+          let passdown_sampled = true;
+          let passdown_traceid;
 
           if (traceUrl !== '') {
-            [passdown_edgeRequest, passdown_reqMethod, traceUrl, passdown_sampled]
+            [passdown_edgeRequest, passdown_reqMethod, traceUrl, passdown_sampled, passdown_traceid]
               = that.opentracingProbeStart(args, probeData, httpReq, traceUrl);
             aspect.after(res, 'end', probeData, function(obj, methodName, args, probeData, ret) {
-              that.opentracingProbeEnd(probeData, traceUrl, passdown_edgeRequest, passdown_reqMethod, passdown_sampled, res);
+              that.opentracingProbeEnd(probeData, traceUrl,
+                  passdown_edgeRequest, passdown_reqMethod, passdown_sampled, passdown_traceid, res);
             });
           }
         });
@@ -130,7 +131,8 @@ HttpProbeZipkin.prototype.opentracingStart = function(methodArgs, probeData, htt
       const traceId = new Some(headers[(Header.TraceId).toLowerCase()] || headers[(Header.TraceId)]);
       const parentSpanId = new Some(headers[(Header.ParentSpanId).toLowerCase()] || headers[(Header.ParentSpanId)]);
       const sampled = new Some(headers[(Header.Sampled).toLowerCase()] || headers[(Header.Sampled)]);
-      const flags = (new Some(headers[(Header.Flags).toLowerCase()] || headers[(Header.Flags)])).flatMap(stringToIntOption).getOrElse(0);
+      const flags = (new Some(headers[(Header.Flags).toLowerCase()]
+        || headers[(Header.Flags)])).flatMap(stringToIntOption).getOrElse(0);
       var id = new TraceId({
         traceId: traceId,
         parentId: parentSpanId,
@@ -141,12 +143,10 @@ HttpProbeZipkin.prototype.opentracingStart = function(methodArgs, probeData, htt
       tracer.setId(id);
       childId = tracer.createChildId();
       tracer.setId(childId);
-      probeData.traceId = tracer.id;
     };
   } else {
     edgeRequest = true;
     tracer.setId(tracer.createRootId());
-    probeData.traceId = tracer.id;
     // Must assign new options back to args[0]
     const { headers } = Request.addZipkinHeaders(methodArgs[0], tracer.id);
     Object.assign(methodArgs[0].headers, headers);
@@ -156,14 +156,14 @@ HttpProbeZipkin.prototype.opentracingStart = function(methodArgs, probeData, htt
 
   sampled = (methodArgs[0].headers[(Header.Sampled)] || methodArgs[0].headers[(Header.Sampled).toLowerCase()]) === '1';
   var urlPrefix = 'http://' + httpReq.headers.host;
-  var maxUrlLength = global.KNJ_TT_MAX_LENGTH;
-  if (urlPrefix.length < global.KNJ_TT_MAX_LENGTH) {
-    maxUrlLength = global.KNJ_TT_MAX_LENGTH - urlPrefix.length;
-  } else {
-    maxUrlLength = 1;
-  }
-  if (traceUrl.length > maxUrlLength) {
-    traceUrl = traceUrl.substr(0, maxUrlLength);
+  // var maxUrlLength = global.KNJ_TT_MAX_LENGTH;
+  // if (urlPrefix.length < global.KNJ_TT_MAX_LENGTH) {
+  //   maxUrlLength = global.KNJ_TT_MAX_LENGTH - urlPrefix.length;
+  // } else {
+  //   maxUrlLength = 1;
+  // }
+  if (traceUrl.length > global.KNJ_TT_MAX_LENGTH) {
+    traceUrl = traceUrl.substr(0, global.KNJ_TT_MAX_LENGTH);
   }
 
   if (sampled){
@@ -171,17 +171,17 @@ HttpProbeZipkin.prototype.opentracingStart = function(methodArgs, probeData, htt
     tracer.recordAnnotation(new Annotation.ServerRecv());
   }
   logger.debug('http-tracer(before): ', tracer.id, sampled, traceUrl);
-  return [edgeRequest, reqMethod, traceUrl, sampled];
+  return [edgeRequest, reqMethod, traceUrl, sampled, tracer.id];
 };
 
-HttpProbeZipkin.prototype.opentracingEnd = function(probeData, traceUrl, edgeRequest, reqMethod, sampled, res){
-  if (traceInfo[probeData.traceId._spanId] === 'start'){
-    delete traceInfo[probeData.traceId._spanId];
+HttpProbeZipkin.prototype.opentracingEnd = function(probeData, traceUrl, edgeRequest, reqMethod, sampled, traceId, res){
+  if (traceId && traceInfo[traceId._spanId] === 'start'){
+    delete traceInfo[traceId._spanId];
   } else {
     return;
   }
 
-  tracer.setId(probeData.traceId);
+  tracer.setId(traceId);
   if (sampled){
     tracer.recordServiceName(serviceName);
     tracer.recordRpc(traceUrl);
@@ -209,6 +209,7 @@ HttpProbeZipkin.prototype.opentracingEnd = function(probeData, traceUrl, edgeReq
   }
   logger.debug('http-tracer(after): ', tracer.id, sampled, traceUrl);
 };
+
 
 /*
  * Custom req.url parser that strips out any trailing query

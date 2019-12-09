@@ -10,6 +10,9 @@ The service account that you use to install and configure the data collector mus
 kubectl auth can-i list nodes --as system:serviceaccount:<namespace>:<service_account_name>
 kubectl auth can-i get pods --as system:serviceaccount:<namespace>:<service_account_name>
 kubectl auth can-i list services --as system:serviceaccount:<namespace>:<service_account_name>
+kubectl auth can-i get services --as system:serviceaccount:<namespace>:<service_account_name>
+kubectl auth can-i list endpoints --as system:serviceaccount:<namespace>:<service_account_name>
+kubectl auth can-i get endpoints --as system:serviceaccount:<namespace>:<service_account_name>
 ```
 
 Remember to change the `<namespace>` and `<service_account_name>` in the commands to the namespace of your environment and the name for the service account that you use to configure the data collector. By default, the `<service_account_name>` is `default`.
@@ -34,20 +37,19 @@ As the Node.js application created by Microclimate has required the `appmetrics`
 
 There are two options to configure the Node.js data collector to monitoring the Node.js applicaton.
 
-#### Option 1 (Passing ICAM server configuration via configMap - Preferred option)
+#### Option 1 (Passing ICAM server configuration via secret - Preferred option)
 
-You can create a configMap for the file `global.environment` and `keyfile.p12` extracted from the ICAM configuration package, and mount this configMap when you deploy the application as a kubenetes deployment.
+You can create a secret for the file `global.environment` and `keyfile.p12` extracted from the ICAM configuration package, and mount this secret when you deploy the application as a kubenetes deployment.
 
-1. Create the Kubernetes ConfigMap:
+1. Create the Kubernetes Secret:
     <pre>
-    kubectl create configmap apm-server-config \
-    --from-file=keyfile.p12=./keyfiles/keyfile.p12 \
-    --from-file=./global.environment
+    cd ibm-cloud-apm-dc-configpack
+    kubectl -n <my_namespace> create secret generic icam-server-secret \
+    --from-file=keyfiles/keyfile.p12 \
+    --from-file=global.environment
     </pre>
-    Or you can use use cam-server-configmap.yaml to create ConfigMap, the cam-server-configmap.yaml is extracted from Configure package. This cam-server-configmap.yaml will create one more keystore file keyfile.jks. In case the other Data collector, which using the keyfile.jks keystore, can share the same ConfigMap with Node.js Data collector.
-    <pre>
-    kubectl create -f cam-server-configmap.yaml
-    </pre>
+    Or you can choose to create cert files e.g. keyfile.jks, ca.pem .... In case the other Data collector, which using the keyfile.jks keystore, can share the same Secret with Node.js Data collector.
+
 2. Update the application yaml file to mount the configure map. See the example below.
     <pre>
     apiVersion: extensions/v1beta1
@@ -88,8 +90,8 @@ You can create a configMap for the file `global.environment` and `keyfile.p12` e
             mountPath: /opt/ibm/apm/serverconfig
         volumes:
         - name: serverconfig
-            configMap:
-            name: apm-server-config
+          secret:
+            secretName: icam-server-secret
             optional: true
     </pre>
 3. Build the new Docker image.
@@ -99,11 +101,11 @@ You can create a configMap for the file `global.environment` and `keyfile.p12` e
 
 You can copy the file global.environment and keyfile.p12 extracted from the configure package into the root directory of Node.js application directly.
 
-1. Update the Dockerfile for your Node.js application to add the following lines:
-    <pre>
-    COPY <i>path_to_global_file</i> <i>root_of_application</i>
-    COPY <i>path_to_keyfile</i> <i>root_of_application</i></pre>
-    where, the <i>path_to_global_file</i> and <i>path_to_keyfile</i> are the relative path to the source of the context of the build (i.e. the Dockerfile), the files global.environment and keyfile.p12 are extracted from the configure package which you downloaded from the Cloud App Management console.
+1. Run apply_configpack.sh tool to copy the file global.environment and keyfile.p12 to the root of Node.js application.  
+    ```
+    ./apply_configpack.sh <configpack> [<application folder>]
+    ```
+    where, `configpack` is path of configure package which you downloaded from the Cloud App Management console. `application folder` is the root folder of the application (where you run application command executed), if you are at application root folder, it can be not specified.
 
 2. Build the new Docker image.
 3. Update the application yaml file to use the new Docker image.

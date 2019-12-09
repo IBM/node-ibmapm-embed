@@ -10,6 +10,9 @@ You can configure the Node.js data collector to monitor applications in IBM Clou
     kubectl auth can-i list nodes --as system:serviceaccount:<namespace>:<service_account_name>
     kubectl auth can-i get pods --as system:serviceaccount:<namespace>:<service_account_name>
     kubectl auth can-i list services --as system:serviceaccount:<namespace>:<service_account_name>
+    kubectl auth can-i get services --as system:serviceaccount:<namespace>:<service_account_name>
+    kubectl auth can-i list endpoints --as system:serviceaccount:<namespace>:<service_account_name>
+    kubectl auth can-i get endpoints --as system:serviceaccount:<namespace>:<service_account_name>
     ```
 
     Remember to change the `<namespace>` and `<service_account_name>` in the commands to the namespace of your environment and the name for the service account that you use to configure the data collector. By default, the `<service_account_name>` is `default`.
@@ -20,7 +23,7 @@ You can configure the Node.js data collector to monitor applications in IBM Clou
 Complete the following steps to install appmetrics with the Node.js data collector integrated:
 
 1. In the `package.json` file of your Node.js application, add the following line to the dependencies section:
-    <pre>"appmetrics":"^4.0.0"</pre>
+    <pre>"appmetrics":"^5.0.0"</pre>
 2. Add the following line to the begining of the main file of your Node.js application:
     <pre>require('appmetrics');</pre>
     

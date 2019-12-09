@@ -8,6 +8,6 @@ To disable the Node.js data collector, roll back the changes that you have made 
 
 2. Delete the global.environment and keyfiles.p12 from Node.js application, in case you configure the Node.js DC by put these files to the root of application.
 
-3. If you configure the Node.js DC by creating the configMap in the Kubernetes, you can disable the Node.js DC by remove the configMap.
+3. If you configure the Node.js DC by creating the secret in the Kubernetes, you can disable the Node.js DC by remove the secret.
 
-    `kubectl delete configmap apm-server-config -n namespace`
+    `kubectl delete secret icam-server-secret -n <namespace>`
