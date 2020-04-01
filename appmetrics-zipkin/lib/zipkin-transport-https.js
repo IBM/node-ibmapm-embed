@@ -14,6 +14,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _require = require('zipkin');
 var JSON_V1 = _require.jsonEncoder.JSON_V1;
+var JSON_V2 = _require.jsonEncoder.JSON_V2;
 
 var HttpsLogger = function() {
   function HttpsLogger(_ref) {
@@ -24,6 +25,9 @@ var HttpsLogger = function() {
     var httpInterval = _ref$httpInterval === undefined ? 1000 : _ref$httpInterval;
     var _ref$jsonEncoder = _ref.jsonEncoder;
     var jsonEncoder = _ref$jsonEncoder === undefined ? JSON_V1 : _ref$jsonEncoder;
+    if (endpoint.indexOf('/api/v2/spans') > 0) {
+      jsonEncoder = JSON_V2;
+    }
 
     _classCallCheck(this, HttpsLogger);
 
@@ -77,6 +81,13 @@ var HttpsLogger = function() {
           headers: header
         };
         commonTools.tlsFix8(finalOptions);
+
+
+        if (process.env.KDE_GATEWAY) {
+          options.path = options.protocol + '//' + options.host + options.path;
+          options.host = process.env.KDE_GATEWAY;
+          options.hostname = process.env.KDE_GATEWAY;
+        }
         try {
           var req = https.request(finalOptions, function(res){
             if (!res) {

@@ -146,11 +146,12 @@ HttpOutboundProbeZipkin.prototype.opentracingStart = function(methodArgs) {
     urlRequested = urlRequested.substr(0, global.KNJ_TT_MAX_LENGTH);
   }
 
-  traceInfo[tracer.id._spanId] = 'start';
-
   sampled = (methodArgs[0].headers[(Header.Sampled)] || methodArgs[0].headers[(Header.Sampled).toLowerCase()]) === '1';
+  sampled = sampled ||
+    (methodArgs[0].headers[(Header.Sampled)] || methodArgs[0].headers[(Header.Sampled).toLowerCase()]) === 'true';
 
   if (sampled) {
+    traceInfo[tracer.id._spanId] = 'start';
     tracer.recordServiceName(serviceName);
     tracer.recordRpc(urlRequested);
     tracer.recordBinary('http.url', urlRequested);
@@ -168,14 +169,14 @@ HttpOutboundProbeZipkin.prototype.opentracingStart = function(methodArgs) {
 };
 
 HttpOutboundProbeZipkin.prototype.opentracingEnd = function(target, childId, urlRequested, sampled, whichOne) {
-  if (traceInfo[childId._spanId] === 'start'){
-    delete traceInfo[childId._spanId];
-  } else {
-    return;
-  }
-
-    tracer.setId(childId);
   if (sampled) {
+    logger.debug('http-outbound-tracer traceInfo', traceInfo);
+    if (traceInfo[childId._spanId] === 'start'){
+      delete traceInfo[childId._spanId];
+    } else {
+      return;
+    }
+    tracer.setId(childId);
     logger.debug('confirm:', urlRequested);
     if (target.res) {
       var status_code = target.res.statusCode.toString();
@@ -186,7 +187,7 @@ HttpOutboundProbeZipkin.prototype.opentracingEnd = function(target, childId, url
     }
     tracer.recordAnnotation(new Annotation.ClientRecv());
   }
-  logger.debug('send http-outbound-tracer(' + whichOne + '): ', tracer.id, sampled, urlRequested);
+  logger.debug('send http-outbound-tracer(' + whichOne + '): ', childId, sampled, urlRequested);
 };
 
 // Get a URL as a string from the options object passed to http.get or http.request

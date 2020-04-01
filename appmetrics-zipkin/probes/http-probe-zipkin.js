@@ -55,7 +55,7 @@ util.inherits(HttpProbeZipkin, Probe);
 
 
 function stringToBoolean(str) {
-  return str === '1';
+  return str === '1' || str === 'true';
 }
 
 function stringToIntOption(str) {
@@ -152,9 +152,10 @@ HttpProbeZipkin.prototype.opentracingStart = function(methodArgs, probeData, htt
     Object.assign(methodArgs[0].headers, headers);
   }
 
-  traceInfo[tracer.id._spanId] = 'start';
 
   sampled = (methodArgs[0].headers[(Header.Sampled)] || methodArgs[0].headers[(Header.Sampled).toLowerCase()]) === '1';
+  sampled = sampled ||
+    (methodArgs[0].headers[(Header.Sampled)] || methodArgs[0].headers[(Header.Sampled).toLowerCase()]) === 'true';
   var urlPrefix = 'http://' + httpReq.headers.host;
   // var maxUrlLength = global.KNJ_TT_MAX_LENGTH;
   // if (urlPrefix.length < global.KNJ_TT_MAX_LENGTH) {
@@ -167,6 +168,7 @@ HttpProbeZipkin.prototype.opentracingStart = function(methodArgs, probeData, htt
   }
 
   if (sampled){
+    traceInfo[tracer.id._spanId] = 'start';
     tracer.recordBinary('http.url', urlPrefix + traceUrl);
     tracer.recordAnnotation(new Annotation.ServerRecv());
   }
@@ -175,14 +177,15 @@ HttpProbeZipkin.prototype.opentracingStart = function(methodArgs, probeData, htt
 };
 
 HttpProbeZipkin.prototype.opentracingEnd = function(probeData, traceUrl, edgeRequest, reqMethod, sampled, traceId, res){
-  if (traceId && traceInfo[traceId._spanId] === 'start'){
-    delete traceInfo[traceId._spanId];
-  } else {
-    return;
-  }
-
-  tracer.setId(traceId);
   if (sampled){
+    logger.debug('http-tracer traceInfo', traceInfo);
+    if (traceId && traceInfo[traceId._spanId] === 'start'){
+      delete traceInfo[traceId._spanId];
+    } else {
+      return;
+    }
+
+    tracer.setId(traceId);
     tracer.recordServiceName(serviceName);
     tracer.recordRpc(traceUrl);
     tracer.recordBinary('service.name', serviceName);
@@ -207,7 +210,7 @@ HttpProbeZipkin.prototype.opentracingEnd = function(probeData, traceUrl, edgeReq
     tool.recordIbmapmContext(tracer, ibmapmContext);
     tracer.recordAnnotation(new Annotation.ServerSend());
   }
-  logger.debug('http-tracer(after): ', tracer.id, sampled, traceUrl);
+  logger.debug('http-tracer(after): ', traceId, sampled, traceUrl);
 };
 
 
