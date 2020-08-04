@@ -18,7 +18,7 @@ module.exports.recordIbmapmContext = function(tracer, ibmapmContext){
   if (ibmapmContext && ibmapmContext['resource.id']) {
     tracer.recordBinary('resource.id', ibmapmContext['resource.id']);
   }
-  if (ibmapmContext && ibmapmContext.tenantId) {
+  if (ibmapmContext && ibmapmContext.tenantId && !process.env.UA_JAEGER_ENDPOINT_ZIPKIN_V2 && !process.env.UA_JAEGER_ENDPOINT_ZIPKIN_V1) {
     tracer.recordBinary('tenant.id', ibmapmContext.tenantId);
   }
   if (ibmapmContext && ibmapmContext.ip) {

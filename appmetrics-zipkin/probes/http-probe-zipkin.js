@@ -202,7 +202,7 @@ HttpProbeZipkin.prototype.opentracingEnd = function(probeData, traceUrl, edgeReq
       }
     }
     tracer.recordBinary('http.method', reqMethod.toUpperCase());
-    if (process.env.APM_TENANT_ID){
+    if (process.env.APM_TENANT_ID && !process.env.UA_JAEGER_ENDPOINT_ZIPKIN_V2 && !process.env.UA_JAEGER_ENDPOINT_ZIPKIN_V1){
       tracer.recordBinary('tenant.id', process.env.APM_TENANT_ID);
     }
     tracer.recordBinary('edge.request', '' + edgeRequest);

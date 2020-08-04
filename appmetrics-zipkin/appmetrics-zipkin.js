@@ -25,19 +25,21 @@ var PropertyReader = require('properties-reader');
 var properties = PropertyReader(__dirname + '/appmetrics-zipkin.properties');
 var {Endpoint, Span} = require('zipkin/lib/model');
 Endpoint.prototype.setServiceName = function setServiceName(serviceName) {
-  // In zipkin, names are lowercase. This eagerly converts to alert users early.
-  this.serviceName = serviceName || undefined;
+    // In zipkin, names are lowercase. This eagerly converts to alert users early.
+    this.serviceName = serviceName || undefined;
 };
 Span.prototype.setName = function setName(name) {
-  // In zipkin, names are lowercase. This eagerly converts to alert users early.
-  this.name = name || undefined;
+    // In zipkin, names are lowercase. This eagerly converts to alert users early.
+    this.name = name || undefined;
 };
 
 const {
-  BatchRecorder
+    BatchRecorder,
+    jsonEncoder: {JSON_V2}
 } = require('zipkin');
+
 const {
-  HttpLogger
+    HttpLogger
 } = require('zipkin-transport-http');
 const HttpsLogger = require('./lib/zipkin-transport-https');
 
@@ -49,166 +51,167 @@ var files = fs.readdirSync(dirPath);
 var processName = '';
 
 module.exports = function(options) {
-  options = options;
-  processName = path.basename(process.argv[1]);
-  if (processName.includes('.js')) {
-    processName = processName.substring(0, processName.length - 3);
-  }
-  files.forEach(function(fileName) {
-    var file = path.join(dirPath, fileName);
-    var probeModule = new (require(file))();
-    probes.push(probeModule);
-  });
-  start(options);
+    options = options;
+    processName = path.basename(process.argv[1]);
+    if (processName.includes('.js')) {
+        processName = processName.substring(0, processName.length - 3);
+    }
+    files.forEach(function(fileName) {
+        var file = path.join(dirPath, fileName);
+        var probeModule = new (require(file))();
+        probes.push(probeModule);
+    });
+    start(options);
 };
 
 function start(options) {
-  // Set up the zipkin
-  var host, port, serviceName, sampleRate;
-  var zipkin_endpoint, pfx, passphase;
+    // Set up the zipkin
+    var host, port, serviceName, sampleRate;
+    var zipkin_endpoint, pfx, passphase;
 
-  global.KNJ_TT_MAX_LENGTH = global.KNJ_TT_MAX_LENGTH || 128;
+    global.KNJ_TT_MAX_LENGTH = global.KNJ_TT_MAX_LENGTH || 128;
 
-  // Uses properties from file if present
-  if (properties){
-    if (properties.get('host')) {
-      host = properties.get('host');
+    // Uses properties from file if present
+    if (properties) {
+        if (properties.get('host')) {
+            host = properties.get('host');
+        }
+        if (properties.get('port')) {
+            port = properties.get('port');
+        }
+        if (properties.get('serviceName')) {
+            serviceName = properties.get('serviceName');
+        }
+        if (properties.get('sampleRate')) {
+            sampleRate = properties.get('sampleRate');
+        }
     }
-    if (properties.get('port')) {
-      port = properties.get('port');
+    if (options) {
+        host = options['host'];
+        port = options['port'];
+        if (options.zipkinEndpoint) {
+            zipkin_endpoint = options.zipkinEndpoint;
+        }
+        if (options.pfx) {
+            pfx = options.pfx;
+        }
+        if (options.passphase) {
+            passphase = options.passphase;
+        }
+        serviceName = options['serviceName'];
+        sampleRate = options['sampleRate'];
     }
-    if (properties.get('serviceName')) {
-      serviceName = properties.get('serviceName');
-    }
-    if (properties.get('sampleRate')) {
-      sampleRate = properties.get('sampleRate');
-    }
-  }
 
-  if (options) {
-    host = options['host'];
-    port = options['port'];
-    if (options.zipkinEndpoint){
-      zipkin_endpoint = options.zipkinEndpoint;
+    if (!serviceName) {
+        serviceName = 'default'; // processName;
     }
-    if (options.pfx){
-      pfx = options.pfx;
+    if (!host) {
+        host = 'localhost';
     }
-    if (options.passphase){
-      passphase = options.passphase;
+    if (!port) {
+        port = 9411;
     }
-    serviceName = options['serviceName'];
-    sampleRate = options['sampleRate'];
-  }
+    if (!sampleRate) {
+        sampleRate = 1.0;
+    }
 
-  if (!serviceName) {
-    serviceName = 'default'; // processName;
-  }
-  if (!host) {
-    host = 'localhost';
-  }
-  if (!port) {
-    port = 9411;
-  }
-  if (!sampleRate) {
-    sampleRate = 1.0;
-  }
+    // Test if the host & port are valid
+    // if (host && port) {
+    //   tcpp.probe(host, port, function(err, available) {
+    //     if (err) {
+    //       console.log('Unable to contact Zipkin at ' + host + ':' + port);
+    //       return;
+    //     }
+    //     if (!available) {
+    //       console.log('Unable to contact Zipkin at ' + host + ':' + port);
+    //     }
+    //   });
+    // }
 
-  // Test if the host & port are valid
-  // if (host && port) {
-  //   tcpp.probe(host, port, function(err, available) {
-  //     if (err) {
-  //       console.log('Unable to contact Zipkin at ' + host + ':' + port);
-  //       return;
-  //     }
-  //     if (!available) {
-  //       console.log('Unable to contact Zipkin at ' + host + ':' + port);
-  //     }
-  //   });
-  // }
+    const zipkinUrl = zipkin_endpoint || `http://${host}:${port}/api/v2/spans`;
+    const recorder = new BatchRecorder({
+        logger: zipkinUrl.startsWith('https:') ?
+            new HttpsLogger({
+                endpoint: zipkinUrl,
+                jsonEncoder: JSON_V2,
+                pfx: pfx,
+                passphase: passphase
+            }) :
+            new HttpLogger({
+                endpoint: zipkinUrl,
+                jsonEncoder: JSON_V2
+            })
+    });
 
-  const zipkinUrl = zipkin_endpoint || `http://${host}:${port}/api/v1/spans`;
-  const recorder = new BatchRecorder({
-    logger: zipkinUrl.startsWith('https:') ?
-    new HttpsLogger({
-      endpoint: zipkinUrl,
-      pfx: pfx,
-      passphase: passphase
-    }) :
-    new HttpLogger({
-      endpoint: zipkinUrl
-    })
-  });
-
-  // Configure and start the probes
-  probes.forEach(function(probe) {
-    probe.setConfig(options);
-    probe.setRecorder(recorder);
-    probe.setServiceName(serviceName);
-    probe.start();
-    //    probe.enableRequests();
-  });
+    // Configure and start the probes
+    probes.forEach(function(probe) {
+        probe.setConfig(options);
+        probe.setRecorder(recorder);
+        probe.setServiceName(serviceName);
+        probe.start();
+        //    probe.enableRequests();
+    });
 }
 
 module.exports.update = function(options) {
-  start(options);
-  // for (var i = 0; i < probes.length; i++) {
-  //   probes[i].updateServiceName(probes[i].serviceName);
-  // }
-  probes.forEach(function(probe) {
-    probe.updateProbes();
-    //    probe.enableRequests();
-  });
+    start(options);
+    // for (var i = 0; i < probes.length; i++) {
+    //   probes[i].updateServiceName(probes[i].serviceName);
+    // }
+    probes.forEach(function(probe) {
+        probe.updateProbes();
+        //    probe.enableRequests();
+    });
 };
 
-module.exports.updateServiceName = function(serviceName){
-  probes.forEach(function(probe) {
-    probe.setServiceName(serviceName);
-    probe.updateProbes();
-  });
+module.exports.updateServiceName = function(serviceName) {
+    probes.forEach(function(probe) {
+        probe.setServiceName(serviceName);
+        probe.updateProbes();
+    });
 };
 
-module.exports.updatePathFilter = function(paths){
-  probes.forEach(function(probe) {
-    probe.setPathFilter(paths);
-    probe.updateProbes();
-  });
+module.exports.updatePathFilter = function(paths) {
+    probes.forEach(function(probe) {
+        probe.setPathFilter(paths);
+        probe.updateProbes();
+    });
 };
 
 
-module.exports.updateHeaderFilter = function(headers){
-  probes.forEach(function(probe) {
-    probe.setHeaderFilter(headers);
-    probe.updateProbes();
-  });
+module.exports.updateHeaderFilter = function(headers) {
+    probes.forEach(function(probe) {
+        probe.setHeaderFilter(headers);
+        probe.updateProbes();
+    });
 };
 
 
 module.exports.updateIbmapmContext = function(context) {
-  probes.forEach(function(probe) {
-    probe.setIbmapmContext(context);
-    probe.updateProbes();
-  });
+    probes.forEach(function(probe) {
+        probe.setIbmapmContext(context);
+        probe.updateProbes();
+    });
 };
 
-module.exports.stop = function(){
-  probes.forEach(function(probe) {
-    probe.stop();
-    //    probe.enableRequests();
-  });
+module.exports.stop = function() {
+    probes.forEach(function(probe) {
+        probe.stop();
+        //    probe.enableRequests();
+    });
 };
 
-module.exports.disable = function(){
-  probes.forEach(function(probe) {
-    probe.disable();
-    //    probe.enableRequests();
-  });
+module.exports.disable = function() {
+    probes.forEach(function(probe) {
+        probe.disable();
+        //    probe.enableRequests();
+    });
 };
-module.exports.enable = function(){
-  probes.forEach(function(probe) {
-    probe.enable();
-    //    probe.enableRequests();
-  });
+module.exports.enable = function() {
+    probes.forEach(function(probe) {
+        probe.enable();
+        //    probe.enableRequests();
+    });
 };
 /*
  * Patch the module require function to run the probe attach function
@@ -217,14 +220,14 @@ module.exports.enable = function(){
 var data = {};
 /* eslint no-proto:0 */
 aspect.after(module.__proto__, 'require', data, function(obj, methodName, args, context, ret) {
-  if (ret == null || ret.__ddProbeAttached__) {
-    return ret;
-  } else {
-    for (var i = 0; i < probes.length; i++) {
-      if (probes[i].name === args[0]) {
-        ret = probes[i].attach(args[0], ret, module.exports);
-      }
+    if (ret == null || ret.__ddProbeAttached__) {
+        return ret;
+    } else {
+        for (var i = 0; i < probes.length; i++) {
+            if (probes[i].name === args[0]) {
+                ret = probes[i].attach(args[0], ret, module.exports);
+            }
+        }
+        return ret;
     }
-    return ret;
-  }
 });

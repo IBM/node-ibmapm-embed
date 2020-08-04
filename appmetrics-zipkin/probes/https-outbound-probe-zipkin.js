@@ -102,6 +102,7 @@ HttpsOutboundProbeZipkin.prototype.attach = function(name, target) {
         if (aspect.findCallbackArg(methodArgs) === undefined) {
           that.opentracingProbeEnd(target, passdown_childId, passdown_urlRequested, passdown_sampled, 'after');
         }
+        that.opentracingProbeEnd(target, passdown_childId, passdown_urlRequested, passdown_sampled, 'after');
         return rc;
       }
     );
@@ -156,7 +157,7 @@ HttpsOutboundProbeZipkin.prototype.opentracingStart = function(methodArgs) {
     tracer.recordRpc(urlRequested);
     tracer.recordBinary('http.url', urlRequested);
     tracer.recordBinary('http.method', requestMethod.toUpperCase());
-    if (process.env.APM_TENANT_ID){
+    if (process.env.APM_TENANT_ID && !process.env.UA_JAEGER_ENDPOINT_ZIPKIN_V2 && !process.env.UA_JAEGER_ENDPOINT_ZIPKIN_V1){
       tracer.recordBinary('tenant.id', process.env.APM_TENANT_ID);
     }
     tracer.recordBinary('edge.request', 'false');
