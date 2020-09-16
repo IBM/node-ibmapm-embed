@@ -12,7 +12,7 @@
         "tcp-ping": "^0.1.1",
         "zipkin": "0.10.1",
         "zipkin-context-cls": "0.6.1",
-        "zipkin-transport-http": "0.10.1",
+        "zipkin-transport-http": "0.22.0",
         "ibmapm-restclient": ">=20.3.0"
     },
     "devDependencies": {
