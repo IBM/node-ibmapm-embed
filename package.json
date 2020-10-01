@@ -1,7 +1,7 @@
 {
     "name": "ibmapm-embed",
     "main": "./index.js",
-    "version": "20.8.3",
+    "version": "20.8.4",
     "readme": "Node.js Data Collector",
     "description": "Node.js data collector for IBM BAM",
     "dependencies": {
@@ -13,7 +13,7 @@
         "zipkin": "0.10.1",
         "zipkin-context-cls": "0.6.1",
         "zipkin-transport-http": "0.22.0",
-        "node-fetch": "1.7.2",
+        "node-fetch": ">=1.4.0 <3.0.0",
         "ibmapm-restclient": ">=20.3.0"
     },
     "devDependencies": {
