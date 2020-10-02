@@ -60,8 +60,8 @@ You can also use the supported variables to change the default behavior of data 
 
 ## Troubleshooting
 Find below some possible problem scenarios and corresponding diagnostic steps. 
-### Multiple versions of Node Application Metrics are being initialized.
 
+### Multiple versions of Node Application Metrics are being initialized.
 ```
 AssertionError [ERR_ASSERTION]: Multiple versions of Node Application Metrics are being initialized.
 This version 3.1.3 is incompatible with already initialized
@@ -83,7 +83,7 @@ This version 4.*.* is incompatible with already initialized
 version 4.0.1.
 ```
 If you are using greenfield ibmapm in your application, and your application is using a higher version of appmetrics, you will find this error.  
-you need to delete the appmetrics folder in ./ibmapm/node_modules (it is v4.0.1), so that the latest version in your application could be used.
+you need to delete the appmetrics folder in `./ibmapm/node_modules` (it is v4.0.1), so that the latest version in your application could be used.
 ```
 rm -rf ./ibmapm/node_modules/appmetrics
 ```
