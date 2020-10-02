@@ -83,7 +83,7 @@ This version 4.*.* is incompatible with already initialized
 version 4.0.1.
 ```
 If you are using greenfield ibmapm in your application, and your application is using a higher version of appmetrics, you will find this error.  
-you need to delete the appmetrics folder in ./ibmapm/node_modules (it is v4.0.1), so that the latest version in your application could be used.
+You need to delete the appmetrics folder in `./ibmapm/node_modules` (it is v4.0.1), so that the latest version in your application could be used.
 ```
 rm -rf ./ibmapm/node_modules/appmetrics
 ```
