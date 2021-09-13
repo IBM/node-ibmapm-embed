@@ -8,7 +8,7 @@
         "log4js": "^4.5.1",
         "properties": "^1.2.1",
         "uuid": "^2.0.2",
-        "properties-reader": "0.0.16",
+        "properties-reader": "2.2.0",
         "tcp-ping": "^0.1.1",
         "zipkin": "0.10.1",
         "zipkin-context-cls": "0.6.1",
